@@ -6,6 +6,7 @@ import model.Character;
 import model.Ray;
 import model.Boundary;
 import model.Point;
+import constant.Constant;
 
 import javax.swing.JPanel;
 import java.awt.Graphics;
@@ -17,8 +18,7 @@ import java.awt.Polygon;
 public class GamePanel2D extends JPanel {
 
 	private Controller controller;
-	private static final int BLOCK_SIZE = 16;
-	
+
 	public GamePanel2D(Controller controller) {
 		this.controller = controller;
 		setBackground(Color.BLACK);
@@ -29,38 +29,46 @@ public class GamePanel2D extends JPanel {
 		super.paintComponent(g);
 		g.setColor(Color.GREEN);
 
-		drawAllBoundarys(controller.getBoundarys(), g);
-		drawAllIntersections(controller.getCharacter(), g);
+		drawAllBoundarys(controller.getBounds(), g);
+		// drawAllIntersections(controller.getCharacter(), g);
+		// testRender(controller.getCharacter(), g);
+		drawAllRays(controller.getCharacter().getRays(), g);
+		drawCharacter(controller.getCharacter(), g);
 
 
 	}
 
-	private static void testRender(Character character, Graphics g) {
-		Polygon visiblePlane = new Polygon();
-		for (Ray ray : character.getRays()) {
-			if (ray.getIntersection() != null) {
-				visiblePlane.addPoint((int) ray.getIntersection().getX(), (int) ray.getIntersection().getY());
-			}
+	// private static void testRender(Character character, Graphics g) {
+	// 	Polygon visiblePlane = new Polygon();
+	// 	for (Ray ray : character.getRays()) {
+	// 		if (ray.getIntersection() != null) {
+	// 			visiblePlane.addPoint((int) ray.getIntersection().getX(), (int) ray.getIntersection().getY());
+	// 		}
+	// 	}
+	// 	g.fillPolygon(visiblePlane);
+	// }
+	private static void drawAllRays(LinkedList<Ray> rays, Graphics g) {
+		for (Ray ray : rays) {
+			drawRay(ray, g);
 		}
-		g.fillPolygon(visiblePlane);
 	}
 	private static void drawRay(Ray ray, Graphics g) {
-		int multiplier = 1;
-		int posX = (int) ray.getPos().getX();
-		int posY = (int) ray.getPos().getY();
-		g.drawLine(posX, posY, (int) (ray.getDir().getX() * (BLOCK_SIZE * multiplier)) + posX, (int) (ray.getDir().getY() * (BLOCK_SIZE * multiplier)) + posY);
+		Point pos = Constant.convertToPixels(ray.getPos());
+		Point dir = Constant.convertToPixels(ray.getDir());
+		drawLine(pos, dir, g);
 	}
 	private static void drawAllBoundarys(LinkedList<Boundary> bounds, Graphics g) {
+		g.setColor(Color.RED);
 		for (Boundary bound : bounds) {
 			drawBoundary(bound, g);
 		}
+		g.setColor(Color.GREEN);
 	}
 	private static void drawBoundary(Boundary bound, Graphics g) {
-		int startX = (int) bound.getStart().getX();
-		int startY = (int) bound.getStart().getY();
-		int endX = (int) bound.getEnd().getX();
-		int endY = (int) bound.getEnd().getY();
-		g.drawLine(startX, startY, endX, endY);
+		Point start = Constant.convertToPixels(bound.getStart());
+		Point end = Constant.convertToPixels(bound.getEnd());
+		
+		drawLine(start, end, g);
 	}
 
 	private static void drawAllIntersections(Character character, Graphics g) {
@@ -68,19 +76,21 @@ public class GamePanel2D extends JPanel {
 			drawIntersection(ray, g);
 		}
 	}
+	private static void drawLine(Point a, Point b, Graphics g) {
+		g.drawLine((int) a.getX(), (int) a.getY(), (int) b.getX(), (int) b.getY());
+	}
 	private static void drawIntersection(Ray ray, Graphics g) {
 		Point it = ray.getIntersection();
+		Point pos = Constant.convertToPixels(ray.getPos());
 		if (it != null) {
-			g.drawLine((int) it.getX(), (int) it.getY(), (int) ray.getPos().getX(), (int) ray.getPos().getY());
+			it = Constant.convertToPixels(it);
+			drawLine(it, pos, g);
 		}
 	}
 	private void drawCharacter(Character character, Graphics g) {
-		if (character.getRays() != null) {
-			for (Ray ray : character.getRays()) {
-				drawRay(ray, g);
-			}
-		} else {
-			System.out.println("rays is null");
-		}
+		g.setColor(Color.RED);
+		Point pos = Constant.convertToPixels(character.getPos());
+		g.fillOval((int) pos.getX() - 5, (int) pos.getY() - 5, 10, 10);
+		g.setColor(Color.GREEN);
 	}
 }

@@ -1,6 +1,7 @@
 package model;
 
 import controller.Controller;
+import constant.Constant;
 
 import java.util.LinkedList;
 import java.util.concurrent.ThreadLocalRandom;
@@ -14,81 +15,99 @@ public class Character {
 	private Point target;
 
 	public Character(Controller controller, Point pos) {
-		this.target = new Point(1440, 960);
+		setTarget();
 
 		this.pos = pos;
 		this.controller = controller;
-		rays = new LinkedList<Ray>();
-		createRays();
+		rays = accurateRays(controller.getBounds());
 	}
-	public Character(Controller controller, int x, int y) {
+	public Character(Controller controller, double x, double y) {
 		this(controller, new Point(x, y));
 	}
+	public Character(Controller controller) {
+		this(controller, new Point(Constant.WIDTH / 2, Constant.HEIGHT / 2));
+	}
 
-	private void createRays() {
-		for (int i = 0; i < 360; i += 1) {
-			rays.add(new Ray(this.pos, pointFromAngle(i)));
+	
+
+	public static double angleFromPoint(Point point) {
+		double angle = 0.0;
+		if (point.getX() == 0 && point.getY() == 0) {
+			return angle;
 		}
-	}
-	private void createRaysSmart(LinkedList<Boundary> bounds) {
-		for (Boundary bound : bounds) {
-			rays.add(new Ray(this.pos, bound.getStart()));
-			rays.add(new Ray(this.pos, bound.getEnd()));
+		if (point.getX() > 0) {
+			if (point.getY() > 0) {
+				angle = Math.abs(Math.toDegrees(Math.atan(point.getY() / point.getX())));
+			} else {
+				angle = 360.0 - Math.abs(Math.toDegrees(Math.atan(point.getY() / point.getX())));
+			}
+		} else {
+			if (point.getY() > 0) {
+				angle = 180.0 - Math.abs(Math.toDegrees(Math.atan(point.getY() / point.getX())));
+			} else {
+				angle = 180.0 + Math.abs(Math.toDegrees(Math.atan(point.getY() / point.getX())));
+			}
 		}
+		
+		return angle;
 	}
-	private Point pointFromAngle(int i) {
+
+	public static Point pointFromAngle(int i) {
 		double x = Math.cos(Math.toRadians(i));
 		double y = Math.sin(Math.toRadians(i));
 		return new Point(x, y);
 	}
 
 	public void setPos(Point newPos) {pos = newPos;}
-	public void setPos(double x, double y) {
-		// clearIntersections();
-		pos = new Point(x, y);
-
-		castRays(controller.getBoundarys());
-	}
+	public void setPos(double x, double y) {pos = new Point(x, y);}
 	public Point getPos() {return pos;}
 	public LinkedList<Ray> getRays() {return rays;}
 
+
+	private void createRays() {
+		for (int i = 0; i < 360; i += 10) {
+			rays.add(new Ray(this.pos, pointFromAngle(i)));
+		}
+	}
 	public void update() {
+		move();
 		for (Ray ray : rays) {
 			ray.setPos(pos);
 		}
+		castRays(controller.getBounds());
 	}
-
 	public void castRays(LinkedList<Boundary> bounds) {
 		for (Ray ray : rays) {
 			ray.updateIntersection(bounds);
 		}
 	}
-	public void castRaysSmart(LinkedList<Boundary> bounds) {
-		rays.clear();
-		createRaysSmart(bounds);
-		for (Ray ray : rays) {
-			ray.updateIntersection(bounds);
-		}
+
+
+	public void betterUpdate() {
+		move();
+		rays = accurateRays(controller.getBounds());
 	}
 
-	public void clearIntersections() {
-		for (Ray ray : rays) {
-			ray.resetIntersection();
+	public LinkedList<Ray> accurateRays(LinkedList<Boundary> bounds) {
+		LinkedList<Ray> res = new LinkedList<Ray>();
+		for (Boundary bound : bounds) {
+			res.add(new Ray(pos, bound.getStart()));
+			res.add(new Ray(pos, bound.getEnd()));
 		}
+		Ray.updateIntersection(res, bounds);
+
+		return res;
 	}
 
 	public void setTarget() {
-		int width = 1440;
-		int height = 960;
-
-		double randomX = ThreadLocalRandom.current().nextInt(0, width + 1);
-		double randomY = ThreadLocalRandom.current().nextInt(0, height + 1);
+		double randomX = ThreadLocalRandom.current().nextInt((int) Math.ceil(-Constant.WIDTH / 2), (int) Math.floor(Constant.WIDTH / 2) + 1);
+		double randomY = ThreadLocalRandom.current().nextInt((int) Math.ceil(-Constant.HEIGHT / 2), (int) Math.floor(Constant.HEIGHT / 2) + 1);
 
 		target = new Point(randomX, randomY);
 	}
 	public void move() {
-		double newX = target.getX() - this.pos.getX();
-		double newY = target.getY() - this.pos.getY();
-		setPos(this.pos.getX() + 0.001 * newX, this.pos.getY() + 0.001 * newY);
+		double newX = target.getX() - pos.getX();
+		double newY = target.getY() - pos.getY();
+		setPos(pos.getX() + 0.001 * newX, pos.getY() + 0.001 * newY);
 	}
 }

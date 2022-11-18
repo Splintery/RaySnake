@@ -1,6 +1,7 @@
 package view;
 
 import controller.Controller;
+import constant.Constant;
 
 import javax.swing.JFrame;
 
@@ -13,7 +14,7 @@ public class GameFrame extends JFrame {
 	public GameFrame(Controller controller, GamePanel2D gamePanel2D) {
 		this.controller = controller;
 		this.gamePanel2D = gamePanel2D;
-		frameSetUp(1440, 960);
+		frameSetUp(Constant.WINDOW_WIDTH, Constant.WINDOW_HEIGHT);
 	}
 
 	private void frameSetUp(int width, int height) {

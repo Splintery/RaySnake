@@ -1,6 +1,9 @@
 package launcher;
 
 import controller.Controller;
+import constant.Constant; 
+
+import model.Character;
 import model.Point;
 
 public class Launcher {

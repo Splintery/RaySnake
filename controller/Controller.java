@@ -7,6 +7,8 @@ import model.Boundary;
 import model.Character;
 import model.Ray;
 
+import constant.Constant;
+
 import input.MouseInputs;
 
 import java.awt.Point;
@@ -20,30 +22,33 @@ public class Controller implements Runnable {
 	private Thread mainThread;
 
 	private Character character;
-	private Ray ray;
 	private LinkedList<Boundary> bounds;
 
-	private int UPS = 250;
+	private int UPS = 200;
 	private double timePerUpdate = 1000000000.0 / UPS;
 	private final int FPS = 144;
 	private double timePerFrame = 1000000000.0 / FPS;
 	private boolean suspended = false;
 
 	public Controller() {
+		double w = Constant.WIDTH / 2;
+		double h = Constant.HEIGHT / 2;
 
-		character = new Character(this, 720, 480);
+		
 
 		bounds = new LinkedList<Boundary>();
-		bounds.add(new Boundary(0, 960, 1440, 960));
-		bounds.add(new Boundary(0, 0, 0, 960));
-		bounds.add(new Boundary(0, 0, 1440, 0));
-		bounds.add(new Boundary(1440, 0, 1440, 960));
+		
+		bounds.add(new Boundary(-w, -h, -w, h));
+		bounds.add(new Boundary(-w, h, w, h));
+		bounds.add(new Boundary(w, -h, w, h));
+		bounds.add(new Boundary(-w, -h, w, -h));
 
-		bounds.add(new Boundary(300, 50, 300, 700));
-		bounds.add(new Boundary(600, 50, 500, 800));
-		bounds.add(new Boundary(300, 50, 600, 50));
+		bounds.add(new Boundary(10, 5, 10, -15));
+		bounds.add(new Boundary(35, 5, 35, -15));
+		bounds.add(new Boundary(10, 5, 35, 5));
+		bounds.add(new Boundary(10, -15, 35, -15));
 
-		bounds.add(new Boundary(573, 783, 299, 986));
+		character = new Character(this, w, h);
 
 		gamePanel2D = new GamePanel2D(this);
 		gamePanel2D.addMouseMotionListener(new MouseInputs(this));
@@ -53,8 +58,7 @@ public class Controller implements Runnable {
 	}
 
 	public Character getCharacter() {return character;}
-	public Ray getRay() {return ray;}
-	public LinkedList<Boundary> getBoundarys() {return bounds;}
+	public LinkedList<Boundary> getBounds() {return bounds;}
 
 	@Override
 	public void run() {
@@ -85,7 +89,6 @@ public class Controller implements Runnable {
 						character.setTarget();
 						cycle = 0;
 					}
-					character.move();
 					update();
 					updates++;
 				}
@@ -115,6 +118,6 @@ public class Controller implements Runnable {
 	}
 
 	public void update() {
-		character.update();
+		character.betterUpdate();
 	}
 }

@@ -68,6 +68,11 @@ public class Ray {
 			}
 		}
 	}
+	public static void updateIntersection(LinkedList<Ray> rays, LinkedList<Boundary> bounds) {
+		for (Ray ray : rays) {
+			ray.updateIntersection(bounds);
+		}
+	}
 
 	public Point getIntersection() {return intersection;}
 	public void resetIntersection() {intersection = null;}
