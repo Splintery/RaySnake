@@ -3,13 +3,14 @@ package model;
 import controller.Controller;
 import constant.Constant;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Character {
 
 	private Point pos;
-	private LinkedList<Ray> rays;
+	private List<Ray> rays;
 	private Controller controller;
 
 	private Point target;
@@ -29,72 +30,54 @@ public class Character {
 	}
 
 	
-
-	public static double angleFromPoint(Point point) {
-		double angle = 0.0;
-		if (point.getX() == 0 && point.getY() == 0) {
-			return angle;
-		}
-		if (point.getX() > 0) {
-			if (point.getY() > 0) {
-				angle = Math.abs(Math.toDegrees(Math.atan(point.getY() / point.getX())));
-			} else {
-				angle = 360.0 - Math.abs(Math.toDegrees(Math.atan(point.getY() / point.getX())));
-			}
-		} else {
-			if (point.getY() > 0) {
-				angle = 180.0 - Math.abs(Math.toDegrees(Math.atan(point.getY() / point.getX())));
-			} else {
-				angle = 180.0 + Math.abs(Math.toDegrees(Math.atan(point.getY() / point.getX())));
-			}
-		}
-		
-		return angle;
-	}
-
-	public static Point pointFromAngle(int i) {
-		double x = Math.cos(Math.toRadians(i));
-		double y = Math.sin(Math.toRadians(i));
-		return new Point(x, y);
-	}
-
 	public void setPos(Point newPos) {pos = newPos;}
 	public void setPos(double x, double y) {pos = new Point(x, y);}
 	public Point getPos() {return pos;}
-	public LinkedList<Ray> getRays() {return rays;}
+	public List<Ray> getRays() {return rays;}
 
 
-	private void createRays() {
-		for (int i = 0; i < 360; i += 10) {
-			rays.add(new Ray(this.pos, pointFromAngle(i)));
-		}
-	}
-	public void update() {
-		move();
-		for (Ray ray : rays) {
-			ray.setPos(pos);
-		}
-		castRays(controller.getBounds());
-	}
-	public void castRays(LinkedList<Boundary> bounds) {
-		for (Ray ray : rays) {
-			ray.updateIntersection(bounds);
-		}
-	}
+	// private void createRays() {
+	// 	for (int i = 0; i < 360; i += 10) {
+	// 		rays.add(new Ray(this.pos, pointFromAngle(i)));
+	// 	}
+	// }
+	// public void update() {
+	// 	move();
+	// 	for (Ray ray : rays) {
+	// 		ray.setPos(pos);
+	// 	}
+	// 	castRays(controller.getBounds());
+	// }
+	// public void castRays(List<Boundary> bounds) {
+	// 	for (Ray ray : rays) {
+	// 		ray.updateIntersection(bounds);
+	// 	}
+	// }
 
 
 	public void betterUpdate() {
-		move();
+		// move();
 		rays = accurateRays(controller.getBounds());
 	}
 
-	public LinkedList<Ray> accurateRays(LinkedList<Boundary> bounds) {
-		LinkedList<Ray> res = new LinkedList<Ray>();
+	public List<Ray> accurateRays(List<Boundary> bounds) {
+		ArrayList<Ray> res = new ArrayList<Ray>();
 		for (Boundary bound : bounds) {
-			res.add(new Ray(pos, bound.getStart()));
-			res.add(new Ray(pos, bound.getEnd()));
+			
+			Point start = new Point(bound.getStart());
+			Point end = new Point(bound.getEnd());
+
+			double distance = start.getLength(end);
+			double ratioT = 10 / distance;
+			Point nearStart = new Point((1 - ratioT) * start.getX() + ratioT * end.getX(), (1 - ratioT) * start.getY() + ratioT * end.getY());
+			Point nearEnd = new Point((1 - ratioT) * end.getX() + ratioT * start.getX(), (1 - ratioT) * end.getY() + ratioT * start.getY());
+			res.add(new Ray(pos, nearStart, bound));
+			res.add(new Ray(pos, nearEnd, bound));
+			res.add(new Ray(pos, start, bound));
+			res.add(new Ray(pos, end, bound));
+
 		}
-		Ray.updateIntersection(res, bounds);
+		Ray.updateDirection(res, bounds);
 
 		return res;
 	}

@@ -12,31 +12,34 @@ import constant.Constant;
 import input.MouseInputs;
 
 import java.awt.Point;
-import java.util.LinkedList;
+import java.util.List;
+import java.util.ArrayList;
 
 
 public class Controller implements Runnable {
 
 	private GameFrame gameFrame;
 	private GamePanel2D gamePanel2D;
+	private MouseInputs mouseInputs;
 	private Thread mainThread;
 
 	private Character character;
-	private LinkedList<Boundary> bounds;
+	private List<Boundary> bounds;
 
 	private int UPS = 200;
 	private double timePerUpdate = 1000000000.0 / UPS;
 	private final int FPS = 144;
 	private double timePerFrame = 1000000000.0 / FPS;
 	private boolean suspended = false;
+	public boolean move = true;
 
 	public Controller() {
-		double w = Constant.WIDTH / 2;
-		double h = Constant.HEIGHT / 2;
+		double w = Constant.WIDTH / 2.0 - 5;
+		double h = Constant.HEIGHT / 2.0 - 5;
 
 		
 
-		bounds = new LinkedList<Boundary>();
+		bounds = new ArrayList<Boundary>();
 		
 		bounds.add(new Boundary(-w, -h, -w, h));
 		bounds.add(new Boundary(-w, h, w, h));
@@ -48,17 +51,19 @@ public class Controller implements Runnable {
 		bounds.add(new Boundary(10, 5, 35, 5));
 		bounds.add(new Boundary(10, -15, 35, -15));
 
-		character = new Character(this, w, h);
+		character = new Character(this, w - 40, h - 20);
 
 		gamePanel2D = new GamePanel2D(this);
-		gamePanel2D.addMouseMotionListener(new MouseInputs(this));
+		mouseInputs = new MouseInputs(this);
+		gamePanel2D.addMouseMotionListener(mouseInputs);
+		gamePanel2D.addMouseListener(mouseInputs);
 		gameFrame = new GameFrame(this, gamePanel2D);
 		mainThread = new Thread(this);
 		mainThread.start();
 	}
 
 	public Character getCharacter() {return character;}
-	public LinkedList<Boundary> getBounds() {return bounds;}
+	public List<Boundary> getBounds() {return bounds;}
 
 	@Override
 	public void run() {
@@ -68,8 +73,6 @@ public class Controller implements Runnable {
 		// Ainsi que 2 champs pour traquer les frames
 		int frames = 0;
 		double frameTracker = 0;
-
-		int cycle = 0;
 
 
 		// Ces 2 champs sont pour compter le temps en nanoSeconde entre deux passage dans 
@@ -85,14 +88,13 @@ public class Controller implements Runnable {
 			// Si le jeu est en pause alors suspended = true
 			if (updateTracker >= 1) {
 				if (!suspended) {
-					if (cycle > 1000) {
+					if (move) {
 						character.setTarget();
-						cycle = 0;
+						move = false;
 					}
 					update();
 					updates++;
 				}
-				cycle++;
 				updateTracker--;
 			}
 
@@ -120,4 +122,5 @@ public class Controller implements Runnable {
 	public void update() {
 		character.betterUpdate();
 	}
+	public void suspend() {suspended = true;}
 }
