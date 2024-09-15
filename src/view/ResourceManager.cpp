@@ -5,13 +5,14 @@ ResourceManager::ResourceManager() {
     std::cout << "Constructed resource manager." << std::endl;
 }
 
-void ResourceManager::loadTexture(std::string key, std::string filePath) {
+void ResourceManager::loadTexture(std::string key, std::string filePath, sf::IntRect area) {
     sf::Texture texture;
 
-    if (texture.loadFromFile(filePath)) {
+    if (texture.loadFromFile(filePath, area)) {
         this -> textures[key] = texture;
     }
 }
+
 sf::Texture &ResourceManager::getTexture(std::string key) {
     return this -> textures.at(key);
 }

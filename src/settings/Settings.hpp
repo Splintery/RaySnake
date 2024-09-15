@@ -1,0 +1,3 @@
+#define TILE_SIZE 64.0f
+#define WORLD_WIDTH 20
+#define WORLD_HEIGTH 15

@@ -1,6 +1,9 @@
 #include <iostream>
 #include "Controller.hpp"
 #include "../view/state/SplashState.hpp"
+#include "../model/Direction.hpp"
+#include "../model/World.hpp"
+#include "../settings/Settings.hpp"
 
 Controller::Controller(int width, int height, const std::string &title) {
     std::cout << "Creating controller..." << std::endl;
@@ -12,13 +15,23 @@ Controller::Controller(int width, int height, const std::string &title) {
     clock = sf::Clock();
 
     loadAssets();
+    tmpWorld = new World(sf::IntRect(-10, 7, 20, -14), Direction::East);
+
     stateMachine->addState(new SplashState(this));
 
     run();
 }
 
 void Controller::loadAssets() {
-    resourceManager -> loadFont("minecraft", "./resources/Minecraft.ttf");
+    resourceManager->loadFont("minecraft", "./resources/Minecraft.ttf");
+    resourceManager->loadTexture("snake_head", "./resources/snake_sprite.png", sf::IntRect(0, 0, 64, 256));
+    resourceManager->loadTexture("snake_body", "./resources/snake_sprite.png", sf::IntRect(64, 0, 64, 128));
+    resourceManager->loadTexture("snake_bent_body", "./resources/snake_sprite.png", sf::IntRect(128, 0, 64, 256));
+    resourceManager->loadTexture("snake_tail", "./resources/snake_sprite.png", sf::IntRect(192, 0, 64, 256));
+}
+
+void Controller::draw(const sf::Drawable &drawable) {
+    window->draw(drawable);
 }
 
 // sf::ConvexShape polygon;
@@ -35,7 +48,23 @@ long Controller::getCurrentTime() {
     return clock.getElapsedTime().asMicroseconds();
 };
 
-void Controller::run() {
+sf::Vector2f Controller::getWindowCenter() {
+    sf::Vector2f center(window->getSize().x / 2, window->getSize().y / 2);
+    return center;
+}
+sf::Vector2f Controller::getMousePos() {
+    sf::Vector2i mousePos = sf::Mouse::getPosition(*window);
+    sf::Vector2f res(mousePos.x, mousePos.y);
+    return res;
+}
+
+void Controller::gameover() {
+    printf("GAMEOVER.\n");
+    window->close();
+}
+
+void Controller::run()
+{
     int updates = 0;
     float updateTracker = 0.0f;
 
@@ -45,21 +74,33 @@ void Controller::run() {
     long lastCheck = clock.getElapsedTime().asMilliseconds();
     long previousTime = clock.getElapsedTime().asMicroseconds();
 
-    while (window -> isOpen()) {
-        stateMachine -> processStateChanges();
+    int cycle = 100;
+
+    while (window->isOpen()) {
+        stateMachine->processStateChanges();
 
         updateTracker += static_cast<float>(getCurrentTime() - previousTime) / timePerUpdate;
         if (updateTracker >= 1.0f) {
-            if (!stateMachine -> getActiveState() -> isPaused) {
-                stateMachine -> getActiveState() -> handleInput();
-                stateMachine -> getActiveState() -> update();
+            if (!stateMachine->getActiveState()->isPaused) {
+                stateMachine->getActiveState()->handleInput();
+                tmpWorld->update();
+                if (tmpWorld->gameover) {
+                    gameover();
+                }
                 updates++;
+                if (cycle > 0) {
+                    cycle--;
+                } else {
+                    tmpWorld->snake->move();
+                    stateMachine->getActiveState()->update();
+                    cycle = 100;
+                }
             }
             updateTracker--;
         }
         frameTracker += static_cast<float>(getCurrentTime() - previousTime) / timePerFrame;
         if (frameTracker >= 1.0f) {
-            stateMachine -> getActiveState() -> draw();
+            stateMachine->getActiveState()->draw();
 
             frames++;
             frameTracker--;
@@ -74,4 +115,3 @@ void Controller::run() {
         previousTime = getCurrentTime();
     }
 }
-
