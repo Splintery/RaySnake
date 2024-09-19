@@ -6,15 +6,24 @@ SnakePart::SnakePart(SnakePart *prev, SnakePart *next, Direction dir, sf::Vector
 }
 
 void SnakePart::move() {
-    // printf("OldPos[%f, %f]", position.x, position.y);
     position += getNextPosition();
-    // printf("-> NewPos[%f, %f]\n", position.x, position.y);
     
     if (next != nullptr) {
         next->move();
     }
     if (prev != nullptr) {
-        setDirection(prev->getDirection());
+        if (prev->getDirection() != dir) {
+            if (dir == Direction::North || dir == Direction::South) {
+                if (position.y == prev->getPosition().y) {
+                    setDirection(prev->getDirection());
+                }
+            } else {
+                if (position.x == prev->getPosition().x) {
+                    setDirection(prev->getDirection());
+                }
+            }
+        }
+        
     }
 }
 

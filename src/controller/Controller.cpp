@@ -74,7 +74,7 @@ void Controller::run()
     long lastCheck = clock.getElapsedTime().asMilliseconds();
     long previousTime = clock.getElapsedTime().asMicroseconds();
 
-    int cycle = 100;
+    int cycle = 20;
 
     while (window->isOpen()) {
         stateMachine->processStateChanges();
@@ -93,7 +93,7 @@ void Controller::run()
                 } else {
                     tmpWorld->snake->move();
                     stateMachine->getActiveState()->update();
-                    cycle = 100;
+                    cycle = 20;
                 }
             }
             updateTracker--;
