@@ -16,6 +16,8 @@ public:
     float width() const;
     float height() const;
     void move(sf::Vector2f);
+    bool contains(sf::Vector2f);
+    bool contains(float, float);
 
     friend std::ostream &operator<<(std::ostream &, const Bound &);
 };

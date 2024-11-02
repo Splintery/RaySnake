@@ -29,4 +29,6 @@ void AnimatedSprite::update() {
     }
 }
 
-
+void AnimatedSprite::draw(sf::RenderTarget &target, sf::RenderStates states) const {
+    target.draw(*sprites.at(animationIndex), states);
+}

@@ -18,6 +18,7 @@ public:
     StateMachine* stateMachine;
     sf::RenderWindow* window;
     World *world;
+    Snake *snake;
 
     Controller(int width, int height, const std::string &title);
 

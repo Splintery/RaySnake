@@ -6,12 +6,7 @@
 
 class SnakeAdapter: public Adapter {
 private:
-    sf::Sprite *getHeadTexture(SnakePart *);
-    sf::Sprite *getTailTexture(SnakePart *);
-    sf::Sprite *getBodyTexture(SnakePart *);
-    sf::Sprite *getBentBodyTexture(SnakePart *);
-
-    sf::Sprite *adaptPart(SnakePart *);
+    sf::RectangleShape *adaptPart(SnakePart *);
 public:
     SnakeAdapter(Controller *);
     

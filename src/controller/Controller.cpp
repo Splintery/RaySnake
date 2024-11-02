@@ -15,7 +15,8 @@ Controller::Controller(int width, int height, const std::string &title) {
     clock = sf::Clock();
 
     loadAssets();
-    world = new World(sf::IntRect(-100, 70, 200, -140), Direction::East);
+    snake = new Snake(Direction::East, sf::Vector2f(0, 0), 20);
+    world = new World(Bound(-100.0, 70.0, 200.0, -140.0), snake);
 
     stateMachine->addState(new SplashState(this));
 
@@ -62,11 +63,10 @@ sf::Vector2f Controller::getMousePos() {
 }
 
 void Controller::gameover() {
-    printf("GAMEOVER.\n");
     // window->close();
 }
 void Controller::moveTmp() {
-    world->snake->move(0.25);
+    snake->move(0.25);
 }
 
 void Controller::run()

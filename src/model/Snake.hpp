@@ -11,16 +11,22 @@ private:
     SnakePart *head;
     SnakePart *tail;
     Direction dir;
-    int size;
+    Direction oldDir;
+    float length;
+
+    void trimTail();
+    void glueHead();
 public:
-    Snake(const Direction &, sf::Vector2f position);
+    Snake(const Direction &, sf::Vector2f, float);
     void update();
-    void grow(int n);
-    void move();
+    float size();
+    void grow(float);
+    void move(float);
     void setDirection(const Direction &);
-    sf::Vector2f getHeadPosition();
     SnakePart *getHead();
     SnakePart *getTail();
+
+    friend std::ostream &operator<<(std::ostream &, const Snake &);
 };
 
 #endif

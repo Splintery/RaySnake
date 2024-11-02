@@ -1,8 +1,6 @@
 #include "World.hpp"
 
-World::World(sf::IntRect bounds, Direction startDir): bounds{bounds} {
-    this->snake = new SnakeOpt(startDir, sf::Vector2f(0, 0), 2.0f);
-}
+World::World(Bound bounds, Snake *snake): bounds{bounds}, snake{snake} {}
 
 void World::update() {
     sf::Vector2f headPosition = snake->getHead()->getBounds()->topL;
@@ -13,13 +11,9 @@ void World::update() {
     }
 }
 
-SnakeOpt &World::getSnake() {
-    return *snake;
-}
-
 int World::getWidth() {
-    return bounds.width;
+    return bounds.width();
 }
 int World::getHeight() {
-    return bounds.height;
+    return bounds.height();
 }

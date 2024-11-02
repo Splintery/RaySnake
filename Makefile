@@ -4,9 +4,9 @@ BUILD=build
 EXEC_NAME=raysnake.exe
 
 STATES=$(BUILD)/SplashState.o
-MODEL=$(BUILD)/Snake.o $(BUILD)/SnakePart.o $(BUILD)/World.o $(BUILD)/Bound.o $(BUILD)/SnakeOpt.o $(BUILD)/SnakeOptPart.o
+MODEL=$(BUILD)/World.o $(BUILD)/Bound.o $(BUILD)/Snake.o $(BUILD)/SnakePart.o
 VIEW=$(BUILD)/StateMachine.o $(BUILD)/ResourceManager.o $(BUILD)/AnimatedSprite.o
-ADAPTER=$(BUILD)/SnakeAdapter.o $(BUILD)/SnakeOptAdapter.o
+ADAPTER=$(BUILD)/SnakeAdapter.o
 
 all: compile
 
@@ -23,10 +23,6 @@ $(BUILD)/World.o: src/model/World.cpp src/model/World.hpp src/model/Snake.hpp
 	$(GCC) -c src/model/World.cpp -o $(BUILD)/World.o -I $(SFML)/include
 $(BUILD)/Bound.o: src/model/Bound.cpp src/model/Bound.hpp
 	$(GCC) -c src/model/Bound.cpp -o $(BUILD)/Bound.o -I $(SFML)/include
-$(BUILD)/SnakeOptPart.o: src/model/SnakeOptPart.cpp src/model/SnakeOptPart.hpp
-	$(GCC) -c src/model/SnakeOptPart.cpp -o $(BUILD)/SnakeOptPart.o -I $(SFML)/include
-$(BUILD)/SnakeOpt.o: src/model/SnakeOpt.cpp src/model/SnakeOpt.hpp
-	$(GCC) -c src/model/SnakeOpt.cpp -o $(BUILD)/SnakeOpt.o -I $(SFML)/include
 
 # View compilation rules
 $(BUILD)/StateMachine.o: src/view/StateMachine.cpp src/view/StateMachine.hpp src/view/State.hpp

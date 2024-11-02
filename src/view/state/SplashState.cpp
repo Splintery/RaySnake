@@ -20,8 +20,8 @@ SplashState::~SplashState() {
 }
 
 void SplashState::init() {
-    adpater = new SnakeOptAdapter(controller);
-    currentSnake = adpater->adapt(&controller->world->getSnake());
+    adpater = new SnakeAdapter(controller);
+    currentSnake = adpater->adapt(controller->snake);
     an = new AnimatedSprite(controller->resourceManager->getTexture("testAni"), 7, 16, 7, 14);
 }
 void SplashState::handleInput() {
@@ -35,17 +35,45 @@ void SplashState::handleInput() {
 			break;
 		case Event::KeyPressed:
 			if (Keyboard::isKeyPressed(Keyboard::Z)) {
-                controller->world->snake->setDirection(Direction::North);
+                controller->snake->setDirection(Direction::North);
             } else if (Keyboard::isKeyPressed(Keyboard::Q)) {
-                controller->world->snake->setDirection(Direction::West);
+                controller->snake->setDirection(Direction::West);
             } else if (Keyboard::isKeyPressed(Keyboard::S)) {
-                controller->world->snake->setDirection(Direction::South);
+                controller->snake->setDirection(Direction::South);
             } else if (Keyboard::isKeyPressed(Keyboard::D)) {
-                controller->world->snake->setDirection(Direction::East);
+                controller->snake->setDirection(Direction::East);
             } else if (Keyboard::isKeyPressed(Keyboard::Space)) {
                 // controller->moveTmp();
-				controller->world->snake->grow(10.0);
+				controller->snake->grow(10.0);
             }
+			else if (Keyboard::isKeyPressed(Keyboard::Up)) {
+				View v = controller->window->getView();
+				v.move(0, 10);
+				controller->window->setView(v);
+			}
+			else if (Keyboard::isKeyPressed(Keyboard::Down)) {
+				View v = controller->window->getView();
+				v.move(0, -10);
+				controller->window->setView(v);
+			}
+			else if (Keyboard::isKeyPressed(Keyboard::Right)) {
+				View v = controller->window->getView();
+				v.move(10, 0);
+				controller->window->setView(v);
+			}
+			else if (Keyboard::isKeyPressed(Keyboard::Left)) {
+				View v = controller->window->getView();
+				v.move(-10, 0);
+				controller->window->setView(v);
+			} else if (Keyboard::isKeyPressed(Keyboard::A)) {
+				View v = controller->window->getView();
+				v.zoom(0.75f);
+				controller->window->setView(v);
+			} else if (Keyboard::isKeyPressed(Keyboard::E)) {
+				View v = controller->window->getView();
+				v.zoom(1.25f);
+				controller->window->setView(v);
+			}
 			break;
 		
 		default:
@@ -55,15 +83,14 @@ void SplashState::handleInput() {
 }
 
 void SplashState::update() {
-    currentSnake = adpater->adapt(&controller->world->getSnake());
+    currentSnake = adpater->adapt(controller->snake);
 }
 
 void SplashState::draw() {
-	controller->window->clear(Color::Blue);
+	controller->window->clear();
 
-    // controller->window->draw(*an->debugMe(0));
-    // an->update();
-    // controller->draw(*an->getCurrentSprite());
+    an->update();
+    controller->draw(*an);
 
 
 	std::vector<Drawable *>::iterator it;

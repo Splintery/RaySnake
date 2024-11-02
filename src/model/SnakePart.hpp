@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "Direction.hpp"
+#include "Bound.hpp"
 
 class SnakePart {
 private:
@@ -11,20 +12,24 @@ private:
     SnakePart *next;
     Direction dir;
 
-    sf::Vector2f position;
+    Bound *bounds;
 
 public:
-    SnakePart(SnakePart *, SnakePart *, Direction dir, sf::Vector2f position);
-    void move();
+    SnakePart(SnakePart *, SnakePart *, Direction dir, Bound *bounds);
+    float size(float accumulator = 0);
+    void growHead(float);
+    void growTail(float);
+    void grow(float);
     void addNext(SnakePart *);
     void addPrev(SnakePart *);
-    void setDirection(const Direction &);
+    void removeNext();
+    void removePrev();
     Direction getDirection();
-    sf::Vector2f getPosition();
-    sf::Vector2f getNextPosition();
     SnakePart *getNext();
     SnakePart *getPrev();
-    Direction getDirectionFrom(SnakePart *);
+    Bound *getBounds();
+
+    friend std::ostream &operator<<(std::ostream &, const SnakePart &);
 };
 
 #endif

@@ -4,7 +4,7 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 
-class AnimatedSprite {
+class AnimatedSprite: public sf::Drawable {
 private:
     std::vector<sf::Sprite *> sprites;
     int animationTick = 0;
@@ -25,6 +25,7 @@ public:
     sf::Sprite *getCurrentSprite();
     sf::Sprite * debugMe(int n);
     void update(); // Needs to be called every frame in order to set the correct texture
+    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 
 #endif

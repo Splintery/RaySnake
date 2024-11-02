@@ -27,6 +27,14 @@ void Bound::move(sf::Vector2f p) {
     botR += p;
 }
 
+bool Bound::contains(float x, float y) {
+    return x >= topL.x && x < botR.x && y <= topL.y && y > botR.y;
+}
+
+bool Bound::contains(sf::Vector2f p) {
+    return contains(p.x, p.y);
+}
+
 std::ostream &operator<<(std::ostream &out, const Bound &bound) {
     out << "TopLeft[" << bound.topL.x << "; " << bound.topL.y
     << "]-BotRight[" << bound.botR.x << "; " << bound.botR.y

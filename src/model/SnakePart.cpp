@@ -2,28 +2,53 @@
 #include "Direction.hpp"
 
 
-SnakePart::SnakePart(SnakePart *prev, SnakePart *next, Direction dir, sf::Vector2f position): prev{prev}, next{next}, dir{dir}, position{position} {
+SnakePart::SnakePart(SnakePart *prev, SnakePart *next, Direction dir, Bound *bounds): prev{prev}, next{next}, dir{dir}, bounds{bounds} {
 }
 
-void SnakePart::move() {
-    position += getNextPosition();
-    
+float SnakePart::size(float accumulator) {
+    accumulator += (dir == Direction::North || dir == Direction::South) ? bounds->height() : bounds->width();
+
     if (next != nullptr) {
-        next->move();
+        return next->size(accumulator);
+    } else {
+        return accumulator;
     }
-    if (prev != nullptr) {
-        if (prev->getDirection() != dir) {
-            if (dir == Direction::North || dir == Direction::South) {
-                if (position.y == prev->getPosition().y) {
-                    setDirection(prev->getDirection());
-                }
-            } else {
-                if (position.x == prev->getPosition().x) {
-                    setDirection(prev->getDirection());
-                }
-            }
-        }
-        
+}
+
+void SnakePart::growHead(float amount) {
+    switch (dir) {
+    case Direction::North:
+        bounds->topL.y += amount;
+        break;
+    case Direction::South:
+        bounds->botR.y -= amount;
+        break;
+    case Direction::East:
+        bounds->botR.x += amount;
+        break;
+    case Direction::West:
+        bounds->topL.x -= amount;
+        break;
+    default:
+        break;
+    }
+}
+void SnakePart::growTail(float amount) {
+    switch (dir) {
+    case Direction::North:
+        bounds->botR.y -= amount;
+        break;
+    case Direction::South:
+        bounds->topL.y += amount;
+        break;
+    case Direction::East:
+        bounds->topL.x -= amount;
+        break;
+    case Direction::West:
+        bounds->botR.x += amount;
+        break;
+    default:
+        break;
     }
 }
 
@@ -44,60 +69,27 @@ void SnakePart::addPrev(SnakePart *newPart) {
     prev = newPart;
 }
 
-void SnakePart::setDirection(const Direction &newDirection) {
-    dir = newDirection;
+void SnakePart::removeNext() {
+    delete(next);
+    next = nullptr;
+}
+void SnakePart::removePrev() {
+    delete(prev);
+    prev = nullptr;
 }
 Direction SnakePart::getDirection() {
     return dir;
 }
-sf::Vector2f SnakePart::getPosition() {
-    return position;
-}
-
-sf::Vector2f SnakePart::getNextPosition() {
-    sf::Vector2f nextPos(0.0, 0.0);
-    switch (dir)
-    {
-    case Direction::North:
-        nextPos.y = 1;
-        break;
-    case Direction::South:
-        nextPos.y = -1;
-        break;
-    case Direction::East:
-        nextPos.x = 1;
-        break;
-    case Direction::West:
-        nextPos.x = -1;
-        break;
-    default:
-        break;
-    }
-    return nextPos;
-}
-
-// sf::Sprite SnakePart::getSprite() {
-//     return sprite;
-// }
-
 SnakePart *SnakePart::getNext() {
     return next;
 }
-
 SnakePart *SnakePart::getPrev() {
     return prev;
 }
+Bound *SnakePart::getBounds() {
+    return bounds;
+}
 
-Direction SnakePart::getDirectionFrom(SnakePart *from) {
-    sf::Vector2f difference = position - from->getPosition();
-
-    if (difference == sf::Vector2f(1, 0)) {
-        return Direction::West;
-    } else if (difference == sf::Vector2f(-1, 0)) {
-        return Direction::East;
-    } else if (difference == sf::Vector2f(0, 1)) {
-        return Direction::South;
-    } else {
-        return Direction::North;
-    }
+std::ostream &operator<<(std::ostream &out, const SnakePart &part) {
+    return out;
 }
