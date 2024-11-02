@@ -4,7 +4,9 @@
 #include <list>
 #include "../State.hpp"
 #include "../../controller/Controller.hpp"
-#include "../adapter/SnakeAdapter.hpp"
+#include "../../adapter/SnakeAdapter.hpp"
+#include "../../adapter/SnakeOptAdapter.hpp"
+#include "../AnimatedSprite.hpp"
 
 class SplashState: public State {
 public:
@@ -19,11 +21,11 @@ public:
     void draw();
     void setSnake(std::stack<SnakePart *> newSnake);
 private:
-    std::list<sf::Sprite> currentSnake;
-    SnakeAdapter *adpater;
+    std::vector<sf::Drawable *> currentSnake;
+    SnakeOptAdapter *adpater;
     Controller *controller;
 
-    void drawGrid();
+    AnimatedSprite *an;
 };
 
 #endif

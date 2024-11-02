@@ -4,16 +4,17 @@
 #include <SFML/Graphics.hpp>
 #include "Direction.hpp"
 #include "Snake.hpp"
+#include "SnakeOpt.hpp"
 
 class World {
 private:
     sf::IntRect bounds;
 public:
     bool gameover = false;
-    Snake *snake;
+    SnakeOpt *snake;
     World(sf::IntRect bounds, Direction startDir);
     void update();
-    Snake &getSnake();
+    SnakeOpt &getSnake();
     int getWidth();
     int getHeight();
 };

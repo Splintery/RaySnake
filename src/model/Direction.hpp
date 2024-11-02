@@ -7,5 +7,16 @@ enum class Direction {
     East = 2,
     West = -2
 };
-
+// switch (dir) {
+//     case Direction::North:
+//         break;
+//     case Direction::South:
+//         break;
+//     case Direction::East:
+//         break;
+//     case Direction::West:
+//         break;
+//     default:
+//         break;
+// }
 #endif

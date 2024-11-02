@@ -15,7 +15,7 @@ Controller::Controller(int width, int height, const std::string &title) {
     clock = sf::Clock();
 
     loadAssets();
-    tmpWorld = new World(sf::IntRect(-10, 7, 20, -14), Direction::East);
+    world = new World(sf::IntRect(-100, 70, 200, -140), Direction::East);
 
     stateMachine->addState(new SplashState(this));
 
@@ -28,6 +28,9 @@ void Controller::loadAssets() {
     resourceManager->loadTexture("snake_body", "./resources/snake_sprite.png", sf::IntRect(64, 0, 64, 128));
     resourceManager->loadTexture("snake_bent_body", "./resources/snake_sprite.png", sf::IntRect(128, 0, 64, 256));
     resourceManager->loadTexture("snake_tail", "./resources/snake_sprite.png", sf::IntRect(192, 0, 64, 256));
+    resourceManager->loadTexture("tmp", "./resources/tmp_tile.png");
+    resourceManager->getTexture("tmp").setRepeated(true);
+    resourceManager->loadTexture("testAni", "./resources/testAnimation.png");
 }
 
 void Controller::draw(const sf::Drawable &drawable) {
@@ -60,7 +63,10 @@ sf::Vector2f Controller::getMousePos() {
 
 void Controller::gameover() {
     printf("GAMEOVER.\n");
-    window->close();
+    // window->close();
+}
+void Controller::moveTmp() {
+    world->snake->move(0.25);
 }
 
 void Controller::run()
@@ -74,8 +80,6 @@ void Controller::run()
     long lastCheck = clock.getElapsedTime().asMilliseconds();
     long previousTime = clock.getElapsedTime().asMicroseconds();
 
-    int cycle = 20;
-
     while (window->isOpen()) {
         stateMachine->processStateChanges();
 
@@ -83,18 +87,13 @@ void Controller::run()
         if (updateTracker >= 1.0f) {
             if (!stateMachine->getActiveState()->isPaused) {
                 stateMachine->getActiveState()->handleInput();
-                tmpWorld->update();
-                if (tmpWorld->gameover) {
+                world->update();
+                moveTmp();
+                if (world->gameover) {
                     gameover();
                 }
+                stateMachine->getActiveState()->update();
                 updates++;
-                if (cycle > 0) {
-                    cycle--;
-                } else {
-                    tmpWorld->snake->move();
-                    stateMachine->getActiveState()->update();
-                    cycle = 20;
-                }
             }
             updateTracker--;
         }

@@ -4,8 +4,9 @@
 #include <stack>
 #include "SnakePart.hpp"
 #include "Direction.hpp"
+#include "../adapter/Adaptable.hpp"
 
-class Snake {
+class Snake: public Adaptable {
 private:
     SnakePart *head;
     SnakePart *tail;

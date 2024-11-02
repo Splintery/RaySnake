@@ -17,7 +17,7 @@ public:
     ResourceManager* resourceManager;
     StateMachine* stateMachine;
     sf::RenderWindow* window;
-    World *tmpWorld;
+    World *world;
 
     Controller(int width, int height, const std::string &title);
 
@@ -26,12 +26,12 @@ public:
     long getCurrentTime();
     sf::Vector2f getWindowCenter();
     sf::Vector2f getMousePos();
-    std::stack<sf::Sprite> getSnakeSprites();
     void draw(const sf::Drawable &drawable);
 
 
     void gameover();
     void run();
+    void moveTmp();
 };
 
 #endif

@@ -18,7 +18,4 @@ Comme ça, par la suite on peut synchroniser ça avec des sémaphores autour de 
 
 TODOS: Penser de quoi déplacer le champs sf::Sprite du model pour qu'il se trouve dans la vue, mettre en place une grille pour définir la taille de la fenêtre et surtout le nombre de cases que l'on peut afficher sur l'écran avec un fichier de settings par exemple
 
-vers la gauche le bitoniot
-clair 40
-foncé 30
-mettre sur arret le truc que tu tourne quand la machine sonne
+TODO: Sortir le Snake du World, faire une méthode update pour world et la faire gérer les collisions et tout avec le Snake.

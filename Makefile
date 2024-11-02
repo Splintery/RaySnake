@@ -4,8 +4,9 @@ BUILD=build
 EXEC_NAME=raysnake.exe
 
 STATES=$(BUILD)/SplashState.o
-MODEL=$(BUILD)/Snake.o $(BUILD)/SnakePart.o $(BUILD)/World.o
-VIEW=$(BUILD)/StateMachine.o $(BUILD)/ResourceManager.o $(BUILD)/SnakeAdapter.o
+MODEL=$(BUILD)/Snake.o $(BUILD)/SnakePart.o $(BUILD)/World.o $(BUILD)/Bound.o $(BUILD)/SnakeOpt.o $(BUILD)/SnakeOptPart.o
+VIEW=$(BUILD)/StateMachine.o $(BUILD)/ResourceManager.o $(BUILD)/AnimatedSprite.o
+ADAPTER=$(BUILD)/SnakeAdapter.o $(BUILD)/SnakeOptAdapter.o
 
 all: compile
 
@@ -20,14 +21,26 @@ $(BUILD)/Snake.o: src/model/Snake.cpp src/model/Snake.hpp src/model/SnakePart.hp
 	$(GCC) -c src/model/Snake.cpp -o $(BUILD)/Snake.o -I $(SFML)/include
 $(BUILD)/World.o: src/model/World.cpp src/model/World.hpp src/model/Snake.hpp
 	$(GCC) -c src/model/World.cpp -o $(BUILD)/World.o -I $(SFML)/include
+$(BUILD)/Bound.o: src/model/Bound.cpp src/model/Bound.hpp
+	$(GCC) -c src/model/Bound.cpp -o $(BUILD)/Bound.o -I $(SFML)/include
+$(BUILD)/SnakeOptPart.o: src/model/SnakeOptPart.cpp src/model/SnakeOptPart.hpp
+	$(GCC) -c src/model/SnakeOptPart.cpp -o $(BUILD)/SnakeOptPart.o -I $(SFML)/include
+$(BUILD)/SnakeOpt.o: src/model/SnakeOpt.cpp src/model/SnakeOpt.hpp
+	$(GCC) -c src/model/SnakeOpt.cpp -o $(BUILD)/SnakeOpt.o -I $(SFML)/include
 
 # View compilation rules
 $(BUILD)/StateMachine.o: src/view/StateMachine.cpp src/view/StateMachine.hpp src/view/State.hpp
 	$(GCC) -c src/view/StateMachine.cpp -o $(BUILD)/StateMachine.o -I $(SFML)/include
 $(BUILD)/ResourceManager.o: src/view/ResourceManager.cpp src/view/ResourceManager.hpp
 	$(GCC) -c src/view/ResourceManager.cpp -o $(BUILD)/ResourceManager.o -I $(SFML)/include
-$(BUILD)/SnakeAdapter.o: src/view/adapter/SnakeAdapter.cpp src/view/adapter/SnakeAdapter.hpp
-	$(GCC) -c src/view/adapter/SnakeAdapter.cpp -o $(BUILD)/SnakeAdapter.o -I $(SFML)/include
+$(BUILD)/AnimatedSprite.o: src/view/AnimatedSprite.cpp src/view/AnimatedSprite.hpp
+	$(GCC) -c src/view/AnimatedSprite.cpp -o $(BUILD)/AnimatedSprite.o -I $(SFML)/include
+
+# Adapter compilation rules
+$(BUILD)/SnakeAdapter.o: src/adapter/SnakeAdapter.cpp src/adapter/SnakeAdapter.hpp
+	$(GCC) -c src/adapter/SnakeAdapter.cpp -o $(BUILD)/SnakeAdapter.o -I $(SFML)/include
+$(BUILD)/SnakeOptAdapter.o: src/adapter/SnakeOptAdapter.cpp src/adapter/SnakeOptAdapter.hpp
+	$(GCC) -c src/adapter/SnakeOptAdapter.cpp -o $(BUILD)/SnakeOptAdapter.o -I $(SFML)/include
 
 
 $(BUILD)/Controller.o: src/controller/Controller.cpp src/controller/Controller.hpp
@@ -36,8 +49,8 @@ $(BUILD)/Controller.o: src/controller/Controller.cpp src/controller/Controller.h
 $(BUILD)/main.o: main.cpp
 	$(GCC) -c main.cpp -o $(BUILD)/main.o -I $(SFML)/include
 
-main: $(BUILD)/main.o $(BUILD)/Controller.o $(VIEW) $(STATES) $(MODEL)
-	$(GCC) $(BUILD)/main.o $(BUILD)/Controller.o $(VIEW) $(STATES) $(MODEL) -o $(EXEC_NAME) -L $(SFML)/lib -lsfml-graphics -lsfml-window -lsfml-system
+main: $(BUILD)/main.o $(BUILD)/Controller.o $(VIEW) $(STATES) $(MODEL) $(ADAPTER)
+	$(GCC) $(BUILD)/main.o $(BUILD)/Controller.o $(VIEW) $(STATES) $(MODEL) $(ADAPTER) -o $(EXEC_NAME) -L $(SFML)/lib -lsfml-graphics -lsfml-window -lsfml-system
 
 compile: main
 
