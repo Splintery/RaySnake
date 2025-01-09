@@ -1,8 +1,14 @@
+#include <iostream>
 #include "SnakePart.hpp"
 #include "Direction.hpp"
 
 
 SnakePart::SnakePart(SnakePart *prev, SnakePart *next, Direction dir, Bound *bounds): prev{prev}, next{next}, dir{dir}, bounds{bounds} {
+}
+
+SnakePart::~SnakePart() {
+    std::cout << "Destroying snakepart" << std::endl;
+    delete(bounds);
 }
 
 float SnakePart::size(float accumulator) {
@@ -15,41 +21,10 @@ float SnakePart::size(float accumulator) {
     }
 }
 
-void SnakePart::growHead(float amount) {
-    switch (dir) {
-    case Direction::North:
-        bounds->topL.y += amount;
-        break;
-    case Direction::South:
-        bounds->botR.y -= amount;
-        break;
-    case Direction::East:
-        bounds->botR.x += amount;
-        break;
-    case Direction::West:
-        bounds->topL.x -= amount;
-        break;
-    default:
-        break;
-    }
-}
-void SnakePart::growTail(float amount) {
-    switch (dir) {
-    case Direction::North:
-        bounds->botR.y -= amount;
-        break;
-    case Direction::South:
-        bounds->topL.y += amount;
-        break;
-    case Direction::East:
-        bounds->topL.x -= amount;
-        break;
-    case Direction::West:
-        bounds->botR.x += amount;
-        break;
-    default:
-        break;
-    }
+void SnakePart::grow(float amount, bool head) {
+    Bound *tmp = Direction::getStretchedBoundTowards(head ? dir : dir.invert(), bounds, amount);
+    delete(bounds);
+    bounds = tmp;
 }
 
 void SnakePart::addNext(SnakePart *newPart) {

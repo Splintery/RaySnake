@@ -16,7 +16,6 @@ Controller::Controller(int width, int height, const std::string &title) {
 
     loadAssets();
     snake = new Snake(Direction::East, sf::Vector2f(0, 0), 20);
-    world = new World(Bound(-100.0, 70.0, 200.0, -140.0), snake);
 
     stateMachine->addState(new SplashState(this));
 
@@ -65,9 +64,6 @@ sf::Vector2f Controller::getMousePos() {
 void Controller::gameover() {
     // window->close();
 }
-void Controller::moveTmp() {
-    snake->move(0.25);
-}
 
 void Controller::run()
 {
@@ -87,11 +83,7 @@ void Controller::run()
         if (updateTracker >= 1.0f) {
             if (!stateMachine->getActiveState()->isPaused) {
                 stateMachine->getActiveState()->handleInput();
-                world->update();
-                moveTmp();
-                if (world->gameover) {
-                    gameover();
-                }
+                snake->move(0.25);
                 stateMachine->getActiveState()->update();
                 updates++;
             }

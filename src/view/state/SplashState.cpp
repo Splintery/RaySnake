@@ -22,7 +22,7 @@ SplashState::~SplashState() {
 void SplashState::init() {
     adpater = new SnakeAdapter(controller);
     currentSnake = adpater->adapt(controller->snake);
-    an = new AnimatedSprite(controller->resourceManager->getTexture("testAni"), 7, 16, 7, 14);
+    // an = new AnimatedSprite(controller->resourceManager->getTexture("testAni"), 7, 16, 7, 14);
 }
 void SplashState::handleInput() {
 	Event event;
@@ -43,7 +43,6 @@ void SplashState::handleInput() {
             } else if (Keyboard::isKeyPressed(Keyboard::D)) {
                 controller->snake->setDirection(Direction::East);
             } else if (Keyboard::isKeyPressed(Keyboard::Space)) {
-                // controller->moveTmp();
 				controller->snake->grow(10.0);
             }
 			else if (Keyboard::isKeyPressed(Keyboard::Up)) {
@@ -89,14 +88,14 @@ void SplashState::update() {
 void SplashState::draw() {
 	controller->window->clear();
 
-    an->update();
-    controller->draw(*an);
+    // an->update();
+    // controller->draw(*an);
 
 
 	std::vector<Drawable *>::iterator it;
 	for (it = currentSnake.begin(); it != currentSnake.end(); ++it) {
-		// Sprite tmp = *it;
-		controller->window->draw(**it);
+		Drawable *tmp = *it;
+		controller->window->draw(*tmp);
 	}
 
     controller->window->display();

@@ -10,7 +10,7 @@ class Snake: public Adaptable {
 private:
     SnakePart *head;
     SnakePart *tail;
-    Direction dir;
+    Direction newDir;
     Direction oldDir;
     float length;
 
@@ -18,6 +18,8 @@ private:
     void glueHead();
 public:
     Snake(const Direction &, sf::Vector2f, float);
+    virtual ~Snake();
+    Snake(const Snake &) = delete;
     void update();
     float size();
     void grow(float);

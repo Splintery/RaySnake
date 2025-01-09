@@ -16,10 +16,10 @@ private:
 
 public:
     SnakePart(SnakePart *, SnakePart *, Direction dir, Bound *bounds);
+    virtual ~SnakePart();
+    SnakePart(const SnakePart &) = delete;
     float size(float accumulator = 0);
-    void growHead(float);
-    void growTail(float);
-    void grow(float);
+    void grow(float, bool);
     void addNext(SnakePart *);
     void addPrev(SnakePart *);
     void removeNext();

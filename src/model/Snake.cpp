@@ -10,59 +10,42 @@ void Snake::trimTail() {
         tail->removeNext();
     }
 }
-Bound *counterClockwise(Bound *b, int sumDir) {
-    switch (sumDir) {
-        case 1:
-            return new Bound(b->botR + Vector2f(0, 10), b->botR + Vector2f(10, 0));
-        case -1:
-            return new Bound(b->topL + Vector2f(-10, 0), b->topL + Vector2f(0, -10));
-        case -3:
-            return new Bound(b->topL + Vector2f(0, -10), b->topL + Vector2f(10, -20));
-        default:
-            return new Bound(b->botR + Vector2f(-10, 20), b->botR + Vector2f(0, 10));
-    }
-}
-Bound *clockwise(Bound *b, int sumDir) {
-    switch (sumDir) {
-        case 1:
-            return new Bound(b->botR + Vector2f(-10, 0), b->botR + Vector2f(0, -10));
-        case -1:
-            return new Bound(b->topL + Vector2f(0, 10), b->topL + Vector2f(10, 0));
-        case -3:
-            return new Bound(b->botR + Vector2f(-20, 10), b->botR + Vector2f(-10, 0));
-        default:
-            return new Bound(b->topL + Vector2f(0, 0), b->topL + Vector2f(20, -10));
-    }
-}
-Bound *decideOrientation(Direction oldir, Direction newDir, Bound *hb) {
-    if ((oldir == Direction::North && newDir == Direction::East)
-    || (oldir == Direction::South && newDir == Direction::West)
-    || (oldir == Direction::East && newDir == Direction::South)
-    || (oldir == Direction::West && newDir == Direction::North)) {
-        return clockwise(hb, (int)oldir + (int)newDir);
-    } else {
-        return counterClockwise(hb, (int)oldir + (int)newDir);
-    }
-}
 
 void Snake::glueHead() {
-    Bound *b = decideOrientation(oldDir, dir, head->getBounds());
-    SnakePart *newHead = new SnakePart(nullptr, head, dir, b);
+    Bound *unit = new Bound(head->getBounds(), oldDir == Direction::North || oldDir == Direction::West);
+    Bound *tmp = Direction::getBoundTowards(
+        newDir,
+        unit,
+        1.0f
+    );
+    
+    SnakePart *newHead = new SnakePart(nullptr, head, newDir, tmp);
     head->addPrev(newHead);
     head = newHead;
-    tail->growTail(-10.0);
+    tail->grow(-1.0, false);
 }
 
-Snake::Snake(const Direction &dir, Vector2f position, float length) : dir{dir}, oldDir{dir} {
+Snake::Snake(const Direction &dir, Vector2f position, float length) : newDir{dir}, oldDir{dir} {
+    std::cout << "Creating snake" << std::endl;
     Bound *b;
     if (dir == Direction::North || dir == Direction::South) {
-        b = new Bound(position, position + Vector2f(10, -20));
+        b = new Bound(position, position + Vector2f(1, -2));
     } else {
-        b = new Bound(position, position + Vector2f(20, -10));
+        b = new Bound(position, position + Vector2f(2, -1));
     }
     head = new SnakePart(nullptr, nullptr, dir, b);
     tail = head;
     this->length = head->size();
+}
+
+Snake::~Snake() {
+    std::cout << "Destroying snake" << std::endl;
+    SnakePart *tmp, *p = head;
+    while (p != nullptr) {
+        tmp = p;
+        p = p->getNext();
+        delete tmp;
+    }
 }
 
 void Snake::update() {
@@ -72,29 +55,29 @@ float Snake::size() {
     return length;
 }
 void Snake::grow(float amount) {
-    tail->growTail(amount);
+    tail->grow(amount, false);
 }
 
-void Snake::move(float amount) {
-    if (dir != oldDir) {
+void Snake::move(float amount) {    
+    if (newDir != oldDir) {
         glueHead();
     }
 
-    head->growHead(amount);
+    head->grow(amount, true);
     
-    tail->growTail(-amount);
+    tail->grow(-amount, false);
 
-    if (tail->size() <= 10.0) {
-        head->growHead(tail->size());
+    if (tail->size() <= 1.0) {
+        head->grow(tail->size(), true);
         trimTail();
     }
-    oldDir = dir;
-    printf("Size: %f\n", size());
+    oldDir = newDir;
+    std::cout << "Size of snake: " << head->size() << std::endl;
 }
 
 void Snake::setDirection(const Direction &newDir) {
     if (int(newDir) != -int(oldDir)) {
-        dir = newDir;
+        this->newDir = newDir;
     }
 }
 SnakePart *Snake::getHead() {

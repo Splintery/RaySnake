@@ -4,7 +4,7 @@ BUILD=build
 EXEC_NAME=raysnake.exe
 
 STATES=$(BUILD)/SplashState.o
-MODEL=$(BUILD)/World.o $(BUILD)/Bound.o $(BUILD)/Snake.o $(BUILD)/SnakePart.o
+MODEL=$(BUILD)/World.o $(BUILD)/Direction.o $(BUILD)/Snake.o $(BUILD)/SnakePart.o $(BUILD)/Bound.o
 VIEW=$(BUILD)/StateMachine.o $(BUILD)/ResourceManager.o $(BUILD)/AnimatedSprite.o
 ADAPTER=$(BUILD)/SnakeAdapter.o
 
@@ -23,6 +23,8 @@ $(BUILD)/World.o: src/model/World.cpp src/model/World.hpp src/model/Snake.hpp
 	$(GCC) -c src/model/World.cpp -o $(BUILD)/World.o -I $(SFML)/include
 $(BUILD)/Bound.o: src/model/Bound.cpp src/model/Bound.hpp
 	$(GCC) -c src/model/Bound.cpp -o $(BUILD)/Bound.o -I $(SFML)/include
+$(BUILD)/Direction.o: src/model/Direction.cpp src/model/Direction.hpp
+	$(GCC) -c src/model/Direction.cpp -o $(BUILD)/Direction.o -I $(SFML)/include
 
 # View compilation rules
 $(BUILD)/StateMachine.o: src/view/StateMachine.cpp src/view/StateMachine.hpp src/view/State.hpp
