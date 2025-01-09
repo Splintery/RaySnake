@@ -16,6 +16,6 @@ Update dans le modèle nécessite un boolean pour chaque action, dans la vue si 
 
 Comme ça, par la suite on peut synchroniser ça avec des sémaphores autour de la variable bool ou avec une autre méthode de synchronisation.
 
-TODOS: Penser de quoi déplacer le champs sf::Sprite du model pour qu'il se trouve dans la vue, mettre en place une grille pour définir la taille de la fenêtre et surtout le nombre de cases que l'on peut afficher sur l'écran avec un fichier de settings par exemple
+TODO: Rethink the class described in World.hpp, make it so it doesn't hold the snake anymore(the controller will). It should hold the topology of the map the player is on, so it needs a set of Bounds to represent the various obstacles, and be able to check if a certain point is colliding with any of the bounds in the set.
 
-TODO: Sortir le Snake du World, faire une méthode update pour world et la faire gérer les collisions et tout avec le Snake.
+TODO: Make the adapter for the view of the snake use the various textures.
