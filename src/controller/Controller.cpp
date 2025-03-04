@@ -2,7 +2,7 @@
 #include "Controller.hpp"
 #include "../view/state/SplashState.hpp"
 #include "../model/Direction.hpp"
-#include "../model/World.hpp"
+#include "../model/terrain/World.hpp"
 #include "../settings/Settings.hpp"
 
 Controller::Controller(int width, int height, const std::string &title) {
@@ -15,8 +15,6 @@ Controller::Controller(int width, int height, const std::string &title) {
     clock = sf::Clock();
 
     loadAssets();
-    snake = new Snake(Direction::East, sf::Vector2f(0, 0), 20);
-
     stateMachine->addState(new SplashState(this));
 
     run();
@@ -24,13 +22,22 @@ Controller::Controller(int width, int height, const std::string &title) {
 
 void Controller::loadAssets() {
     resourceManager->loadFont("minecraft", "./resources/Minecraft.ttf");
-    resourceManager->loadTexture("snake_head", "./resources/snake_sprite.png", sf::IntRect(0, 0, 64, 256));
-    resourceManager->loadTexture("snake_body", "./resources/snake_sprite.png", sf::IntRect(64, 0, 64, 128));
-    resourceManager->loadTexture("snake_bent_body", "./resources/snake_sprite.png", sf::IntRect(128, 0, 64, 256));
-    resourceManager->loadTexture("snake_tail", "./resources/snake_sprite.png", sf::IntRect(192, 0, 64, 256));
-    resourceManager->loadTexture("tmp", "./resources/tmp_tile.png");
-    resourceManager->getTexture("tmp").setRepeated(true);
-    resourceManager->loadTexture("testAni", "./resources/testAnimation.png");
+    resourceManager->loadTexture("snake_body_sheet", "./resources/snake_body_sheet.png");
+    resourceManager->loadBundle(
+        "snake_body_bundle",
+        resourceManager->cutTexture("snake_body_sheet", 1, 4, 16, 16)
+    );
+    resourceManager->loadTexture("snake_curved_body_sheet", "./resources/snake_curved_body_sheet.png");
+    resourceManager->loadBundle(
+        "snake_curved_body_bundle",
+        resourceManager->cutTexture("snake_curved_body_sheet", 1, 4, 16, 16)
+    );
+    resourceManager->loadTexture("snake_tail_sheet", "./resources/snake_tail_sheet.png");
+    resourceManager->loadBundle(
+        "snake_tail_bundle",
+        resourceManager->cutTexture("snake_tail_sheet", 1, 4, 16, 16)
+    );
+    resourceManager->loadTexture("snake_animated_head", "./resources/testAnimation.png");
 }
 
 void Controller::draw(const sf::Drawable &drawable) {
@@ -83,7 +90,6 @@ void Controller::run()
         if (updateTracker >= 1.0f) {
             if (!stateMachine->getActiveState()->isPaused) {
                 stateMachine->getActiveState()->handleInput();
-                snake->move(0.25);
                 stateMachine->getActiveState()->update();
                 updates++;
             }

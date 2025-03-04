@@ -4,7 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "../view/ResourceManager.hpp"
 #include "../view/StateMachine.hpp"
-#include "../model/World.hpp"
+#include "../model/terrain/World.hpp"
 
 class Controller {
     sf::Clock clock;

@@ -19,8 +19,8 @@ $(BUILD)/SnakePart.o: src/model/SnakePart.cpp src/model/SnakePart.hpp
 	$(GCC) -c src/model/SnakePart.cpp -o $(BUILD)/SnakePart.o -I $(SFML)/include
 $(BUILD)/Snake.o: src/model/Snake.cpp src/model/Snake.hpp src/model/SnakePart.hpp
 	$(GCC) -c src/model/Snake.cpp -o $(BUILD)/Snake.o -I $(SFML)/include
-$(BUILD)/World.o: src/model/World.cpp src/model/World.hpp src/model/Snake.hpp
-	$(GCC) -c src/model/World.cpp -o $(BUILD)/World.o -I $(SFML)/include
+$(BUILD)/World.o: src/model/terrain/World.cpp src/model/terrain/World.hpp src/model/Snake.hpp
+	$(GCC) -c src/model/terrain/World.cpp -o $(BUILD)/World.o -I $(SFML)/include
 $(BUILD)/Bound.o: src/model/Bound.cpp src/model/Bound.hpp
 	$(GCC) -c src/model/Bound.cpp -o $(BUILD)/Bound.o -I $(SFML)/include
 $(BUILD)/Direction.o: src/model/Direction.cpp src/model/Direction.hpp

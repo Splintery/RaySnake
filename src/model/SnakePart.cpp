@@ -11,11 +11,16 @@ SnakePart::~SnakePart() {
     delete(bounds);
 }
 
-float SnakePart::size(float accumulator) {
-    accumulator += (dir == Direction::North || dir == Direction::South) ? bounds->height() : bounds->width();
+float SnakePart::size() {
+    return (dir == Direction::North || dir == Direction::South) ? bounds->height() : bounds->width();
+}
+
+float SnakePart::totalSize(float accumulator)
+{
+    accumulator += size();
 
     if (next != nullptr) {
-        return next->size(accumulator);
+        return next->totalSize(accumulator);
     } else {
         return accumulator;
     }
@@ -52,7 +57,7 @@ void SnakePart::removePrev() {
     delete(prev);
     prev = nullptr;
 }
-Direction SnakePart::getDirection() {
+Direction SnakePart::getDir() {
     return dir;
 }
 SnakePart *SnakePart::getNext() {
@@ -66,5 +71,6 @@ Bound *SnakePart::getBounds() {
 }
 
 std::ostream &operator<<(std::ostream &out, const SnakePart &part) {
+    out << "part{" << *part.bounds << "}";
     return out;
 }

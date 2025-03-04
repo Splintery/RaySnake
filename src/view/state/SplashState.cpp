@@ -20,8 +20,10 @@ SplashState::~SplashState() {
 }
 
 void SplashState::init() {
+	snake = new Snake(Direction::East, sf::Vector2f(0, 0), 20);
     adpater = new SnakeAdapter(controller);
-    currentSnake = adpater->adapt(controller->snake);
+    currentSpriteSnake = adpater->adapt(snake);
+
     // an = new AnimatedSprite(controller->resourceManager->getTexture("testAni"), 7, 16, 7, 14);
 }
 void SplashState::handleInput() {
@@ -35,15 +37,15 @@ void SplashState::handleInput() {
 			break;
 		case Event::KeyPressed:
 			if (Keyboard::isKeyPressed(Keyboard::Z)) {
-                controller->snake->setDirection(Direction::North);
+                snake->setDirection(Direction::North);
             } else if (Keyboard::isKeyPressed(Keyboard::Q)) {
-                controller->snake->setDirection(Direction::West);
+                snake->setDirection(Direction::West);
             } else if (Keyboard::isKeyPressed(Keyboard::S)) {
-                controller->snake->setDirection(Direction::South);
+                snake->setDirection(Direction::South);
             } else if (Keyboard::isKeyPressed(Keyboard::D)) {
-                controller->snake->setDirection(Direction::East);
+                snake->setDirection(Direction::East);
             } else if (Keyboard::isKeyPressed(Keyboard::Space)) {
-				controller->snake->grow(10.0);
+				snake->grow(1.0);
             }
 			else if (Keyboard::isKeyPressed(Keyboard::Up)) {
 				View v = controller->window->getView();
@@ -82,7 +84,8 @@ void SplashState::handleInput() {
 }
 
 void SplashState::update() {
-    currentSnake = adpater->adapt(controller->snake);
+	snake->update();
+    currentSpriteSnake = adpater->adapt(snake);
 }
 
 void SplashState::draw() {
@@ -91,9 +94,8 @@ void SplashState::draw() {
     // an->update();
     // controller->draw(*an);
 
-
 	std::vector<Drawable *>::iterator it;
-	for (it = currentSnake.begin(); it != currentSnake.end(); ++it) {
+	for (it = currentSpriteSnake.begin(); it != currentSpriteSnake.end(); ++it) {
 		Drawable *tmp = *it;
 		controller->window->draw(*tmp);
 	}

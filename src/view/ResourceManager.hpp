@@ -7,6 +7,7 @@
 class ResourceManager {
     std::map<std::string, sf::Texture> textures;
     std::map<std::string, sf::Font> fonts;
+    std::map<std::string, std::vector<sf::Texture>> bundles;
 public:
     ResourceManager();
     virtual ~ResourceManager() = default;
@@ -14,10 +15,15 @@ public:
     ResourceManager& operator=(const ResourceManager&) = delete;
 
     sf::Texture &getTexture(std::string key);
+    std::vector<sf::Texture> cutTexture(std::string key, int line, int column, int linesize, int colsize);
     void loadTexture(std::string key, std::string filePath, sf::IntRect area = sf::IntRect());
 
     void loadFont(std::string key, std::string filePath);
     sf::Font &getFont(std::string key);
+
+    void loadBundle(std::string key, std::vector<std::string> filePaths);
+    void loadBundle(std::string key, std::vector<sf::Texture> textures);
+    std::vector<sf::Texture> &getBundle(std::string key);
 };
 
 #endif

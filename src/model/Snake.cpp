@@ -35,6 +35,9 @@ Snake::Snake(const Direction &dir, Vector2f position, float length) : newDir{dir
     }
     head = new SnakePart(nullptr, nullptr, dir, b);
     tail = head;
+    if (head->size() < length) {
+        grow(length - head->size());
+    }
     this->length = head->size();
 }
 
@@ -49,6 +52,7 @@ Snake::~Snake() {
 }
 
 void Snake::update() {
+    move(0.25f);
     length = head->size();
 }
 float Snake::size() {
@@ -72,7 +76,7 @@ void Snake::move(float amount) {
         trimTail();
     }
     oldDir = newDir;
-    std::cout << "Size of snake: " << head->size() << std::endl;
+    // std::cout << "Size of snake: " << head->totalSize() << std::endl;
 }
 
 void Snake::setDirection(const Direction &newDir) {

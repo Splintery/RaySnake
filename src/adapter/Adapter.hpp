@@ -8,7 +8,7 @@
 
 class Adapter {
 protected:
-    Controller *ctlr;
+    Controller *ctrl;
 public:
     Adapter(Controller *);
     virtual ~Adapter();

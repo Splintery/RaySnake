@@ -20,7 +20,8 @@ public:
     void draw();
     void setSnake(std::stack<SnakePart *> newSnake);
 private:
-    std::vector<sf::Drawable *> currentSnake;
+    Snake *snake;
+    std::vector<sf::Drawable *> currentSpriteSnake;
     SnakeAdapter *adpater;
     Controller *controller;
 

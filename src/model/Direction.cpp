@@ -13,7 +13,25 @@ bool Direction::operator==(Direction d) const { return value == d.value; }
 bool Direction::operator==(Direction::Value v) const { return value == v; }
 bool Direction::operator!=(Direction d) const { return value != d.value; }
 bool Direction::operator!=(Direction::Value v) const { return value != v; }
-Vector2f Direction::getVectorTowards(Direction d, sf::Vector2f p, float n) {
+int Direction::toIndex() const {
+    switch (value) {
+    case North:
+        return 0;
+    case South:
+        return 1;
+    case East:
+        return 2;
+    case West:
+        return 3;
+    default:
+        return -1;
+    }
+}
+int Direction::indexTowards(Direction) const {
+    return 0;
+}
+Vector2f Direction::getVectorTowards(Direction d, sf::Vector2f p, float n)
+{
     switch (d) {
     case North:
         return p + Vector2f(0, n);

@@ -22,6 +22,8 @@ public:
     bool operator==(Direction::Value) const;
     bool operator!=(Direction d) const;
     bool operator!=(Direction::Value) const;
+    int toIndex() const;
+    int indexTowards(Direction) const;
 
     static sf::Vector2f getVectorTowards(Direction, sf::Vector2f, float);
     // Creates a new Bound from the one passed as argument by moving both

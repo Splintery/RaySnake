@@ -18,13 +18,14 @@ public:
     SnakePart(SnakePart *, SnakePart *, Direction dir, Bound *bounds);
     virtual ~SnakePart();
     SnakePart(const SnakePart &) = delete;
-    float size(float accumulator = 0);
+    float size();
+    float totalSize(float accumulator = 0);
     void grow(float, bool);
     void addNext(SnakePart *);
     void addPrev(SnakePart *);
     void removeNext();
     void removePrev();
-    Direction getDirection();
+    Direction getDir();
     SnakePart *getNext();
     SnakePart *getPrev();
     Bound *getBounds();

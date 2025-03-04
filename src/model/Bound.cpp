@@ -15,8 +15,7 @@ Bound::Bound(Vector2f topL, Vector2f botR): topL{topL}, botR{botR} {}
 Bound::Bound(float x1, float y1, float x2, float y2): Bound(Vector2f(x1, y1), Vector2f(x2, y2)) {}
 Bound::Bound(): Bound(0.0, 0.0, 0.0, 0.0) {}
 Bound::~Bound() {
-    // std::cout << "Deleting Bound: " << *this << std::endl;
-    std::cout << "Deleting Bound" << std::endl;
+    // std::cout << "Deleting Bound" << std::endl;
 }
 Bound::Bound(const Bound &) {
     std::cout << "Copyng Bound" << std::endl;
@@ -26,13 +25,7 @@ Bound(
     fromTl ? b->topL : b->botR + Vector2f(-1, 1),
     fromTl ? b->topL + Vector2f(1, -1) : b->botR
 )
-{
-    if (fromTl) {
-        std::cout << "FromTl; " << topL.x  << "," << topL.y << std::endl;
-    } else {
-        std::cout << "FromBr; " << botR.x  << "," << botR.y << std::endl;
-    }
-}
+{}
 
 float Bound::width() const
 {
@@ -55,7 +48,7 @@ std::ostream &operator<<(std::ostream &out, const Bound &bound) {
     out << "TopLeft[" << bound.topL.x << "; " << bound.topL.y
     << "]-BotRight[" << bound.botR.x << "; " << bound.botR.y
     << "]-Width[" << bound.width()
-    << "]-Height[" << bound.height() << "]" << std::endl;
+    << "]-Height[" << bound.height() << "]";
 
     return out;
 }
