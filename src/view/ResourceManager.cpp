@@ -17,20 +17,6 @@ sf::Texture &ResourceManager::getTexture(std::string key) {
     return this->textures.at(key);
 }
 
-std::vector<sf::Texture> ResourceManager::cutTexture(std::string key, int line, int column, int linesize, int colsize) {
-    sf::Image cutme = getTexture(key).copyToImage();
-    std::vector<sf::Texture> textures(line * column, getTexture(key));
-
-    for (int l = 0; l < line; l++) {
-        for (int c = 0; c < column; c++) {
-            textures
-            .at(line * linesize * l + c)
-            .loadFromImage(cutme, sf::IntRect(c * colsize, l * linesize, colsize, linesize));
-        }
-    }
-    return textures;
-}
-
 void ResourceManager::loadFont(std::string key, std::string filePath) {
     sf::Font font;
 
@@ -52,6 +38,20 @@ void ResourceManager::loadBundle(std::string key, std::vector<std::string> fileP
     }
     this->bundles[key] = b;
 }
+void ResourceManager::loadBundle(std::string key, std::string filePath, int line, int column, int linesize, int colsize) {
+    std::vector<sf::Texture> textures;
+    for (int i = 0; i < line * column; i++) {
+        textures.push_back(sf::Texture());
+    }
+
+    for (int l = 0; l < line; l++) {
+        for (int c = 0; c < column; c++) {
+            textures.at(l * column + c).loadFromFile(filePath, sf::IntRect(c * colsize, l * linesize, colsize, linesize));
+        }
+    }
+    this->bundles[key] = textures;
+}
+
 
 void ResourceManager::loadBundle(std::string key, std::vector<sf::Texture> textures) {
     this->bundles[key] = textures;

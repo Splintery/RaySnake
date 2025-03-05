@@ -45,25 +45,24 @@ int sizeAsUnit(float f, int u) {
     return std::ceil(f / (float) u);
 }
 
-Texture SnakeAdapter::getHeadTexture(SnakePart *part) {
+Texture &SnakeAdapter::getHeadTexture(SnakePart *part) {
     return ctrl->resourceManager->getBundle("snake_tail_bundle").at(part->getDir().toIndex());
 }
 
-Texture SnakeAdapter::getCurvedBodyTexture(SnakePart *part) {
-    printf("%ld\n", ctrl->resourceManager->getBundle("snake_curved_body_bundle").size());
+Texture &SnakeAdapter::getCurvedBodyTexture(SnakePart *part) {
     if (
         (part->getDir() == Direction::East && part->getPrev()->getDir() == Direction::South)
-        || (part->getDir() == Direction::West && part->getPrev()->getDir() == Direction::North)
+        || (part->getDir() == Direction::North && part->getPrev()->getDir() == Direction::West)
     ) {
         return ctrl->resourceManager->getBundle("snake_curved_body_bundle").at(0);
     } else if (
-        (part->getDir() == Direction::North && part->getPrev()->getDir() == Direction::East)
-        || (part->getDir() == Direction::West && part->getPrev()->getDir() == Direction::South)
+        (part->getDir() == Direction::South && part->getPrev()->getDir() == Direction::West)
+        || (part->getDir() == Direction::East && part->getPrev()->getDir() == Direction::North)
     ) {
         return ctrl->resourceManager->getBundle("snake_curved_body_bundle").at(1);
     } else if (
-        (part->getDir() == Direction::North && part->getPrev()->getDir() == Direction::West)
-        || (part->getDir() == Direction::East && part->getPrev()->getDir() == Direction::South)
+        (part->getDir() == Direction::South && part->getPrev()->getDir() == Direction::East)
+        || (part->getDir() == Direction::West && part->getPrev()->getDir() == Direction::North)
     ) {
         return ctrl->resourceManager->getBundle("snake_curved_body_bundle").at(2);
     } else {
@@ -71,13 +70,13 @@ Texture SnakeAdapter::getCurvedBodyTexture(SnakePart *part) {
     }
 }
 
-Texture SnakeAdapter::getBodyTexture(SnakePart *part) {
+Texture &SnakeAdapter::getBodyTexture(SnakePart *part) {
     return ctrl->resourceManager->getBundle("snake_body_bundle").at(part->getDir().toIndex());
 }
-Texture SnakeAdapter::getTailTexture(SnakePart *part) {
+Texture &SnakeAdapter::getTailTexture(SnakePart *part) {
     return ctrl->resourceManager->getBundle("snake_tail_bundle").at(part->getDir().toIndex());
 }
-Texture SnakeAdapter::findTexture(SnakePart *p, float i) {
+Texture &SnakeAdapter::findTexture(SnakePart *p, float i) {
     if (i == 0) {
         if (p->getPrev() == nullptr) {
            return getHeadTexture(p);//with correct texture of head
@@ -116,9 +115,8 @@ std::vector<Drawable *> SnakeAdapter::adapt(Adaptable *a)
     std::vector<Drawable * > adaptedSnake;
     for (SnakePart *part = snake->getHead(); part != nullptr; part = part->getNext()) {
         for (float i = 0.0; i < part->size(); i++) {
-            Texture t = findTexture(part, i);
             Vector2f displacement = posInPart(part->getDir(), i);
-            Sprite *adaptedPart = new Sprite(t);
+            Sprite *adaptedPart = new Sprite(findTexture(part, i));
             adaptedPart->setPosition(positionInWorld(part, displacement, ctrl->getWindowCenter()));
             adaptedSnake.push_back(adaptedPart);
         }

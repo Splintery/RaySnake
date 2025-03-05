@@ -22,21 +22,9 @@ Controller::Controller(int width, int height, const std::string &title) {
 
 void Controller::loadAssets() {
     resourceManager->loadFont("minecraft", "./resources/Minecraft.ttf");
-    resourceManager->loadTexture("snake_body_sheet", "./resources/snake_body_sheet.png");
-    resourceManager->loadBundle(
-        "snake_body_bundle",
-        resourceManager->cutTexture("snake_body_sheet", 1, 4, 16, 16)
-    );
-    resourceManager->loadTexture("snake_curved_body_sheet", "./resources/snake_curved_body_sheet.png");
-    resourceManager->loadBundle(
-        "snake_curved_body_bundle",
-        resourceManager->cutTexture("snake_curved_body_sheet", 1, 4, 16, 16)
-    );
-    resourceManager->loadTexture("snake_tail_sheet", "./resources/snake_tail_sheet.png");
-    resourceManager->loadBundle(
-        "snake_tail_bundle",
-        resourceManager->cutTexture("snake_tail_sheet", 1, 4, 16, 16)
-    );
+    resourceManager->loadBundle("snake_body_bundle", "./resources/snake_body_sheet.png", 1, 4, 16, 16);
+    resourceManager->loadBundle("snake_curved_body_bundle", "./resources/snake_curved_body_sheet.png", 1, 4, 16, 16);
+    resourceManager->loadBundle("snake_tail_bundle", "./resources/snake_tail_sheet.png", 1, 4, 16, 16);
     resourceManager->loadTexture("snake_animated_head", "./resources/testAnimation.png");
 }
 

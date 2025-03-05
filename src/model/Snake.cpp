@@ -52,7 +52,7 @@ Snake::~Snake() {
 }
 
 void Snake::update() {
-    move(0.25f);
+    move(0.10f);
     length = head->size();
 }
 float Snake::size() {

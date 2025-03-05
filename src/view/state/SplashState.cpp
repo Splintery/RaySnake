@@ -89,10 +89,13 @@ void SplashState::update() {
 }
 
 void SplashState::draw() {
-	controller->window->clear();
+	controller->window->clear(Color::White);
 
     // an->update();
     // controller->draw(*an);
+	Sprite *s = new Sprite(controller->resourceManager->getBundle("snake_tail_bundle").at(0));
+	s->setPosition(200, 200);
+	controller->draw(*s);
 
 	std::vector<Drawable *>::iterator it;
 	for (it = currentSpriteSnake.begin(); it != currentSpriteSnake.end(); ++it) {

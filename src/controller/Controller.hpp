@@ -8,7 +8,7 @@
 
 class Controller {
     sf::Clock clock;
-    int UPS = 200;
+    int UPS = 100;
     int FPS = 144;
     const float timePerUpdate = 1000000.0f / static_cast<float>(UPS);
     const float timePerFrame = 1000000.0f / static_cast<float>(FPS);
