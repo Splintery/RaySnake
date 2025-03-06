@@ -10,45 +10,10 @@ Adapter::~Adapter() { std::cout << "Destroyed adapter" << std::endl; }
 Adapter::Adapter(Controller *ctrl): ctrl{ctrl} {}
 SnakeAdapter::SnakeAdapter(Controller *ctrl) : Adapter(ctrl) {}
 
-// Drawable *SnakeAdapter::adaptPart(SnakePart *part) {
-//     Bound *b = part->getBounds();
-//     RectangleShape *res = new RectangleShape(Vector2f(b->width(), b->height()));
-//     res->setPosition(
-//         Vector2f(b->topL.x, -b->topL.y) + Vector2f(ctrl->getWindowCenter())
-//     );
-//     if (part->getPrev() == nullptr) {
-//         res->setFillColor(Color::Green);
-//     } else if (part->getNext() == nullptr) {
-//         res->setFillColor(Color::Red);
-//     } else {
-//         res->setFillColor(Color::White);
-//     }
-
-//     return res;
-// }
-
-// std::vector<Drawable *> SnakeAdapter::adapt(Adaptable *a) {
-//     Snake *snake = (Snake *) a;
-//     std::vector<Drawable *> adaptedSnake;
-
-
-//     SnakePart *currentPart = snake->getHead();
-//     while (currentPart != nullptr) {
-//         adaptedSnake.push_back(adaptPart(currentPart));
-//         currentPart = currentPart->getNext();
-//     }
-
-//     return adaptedSnake;
-// }
-
-int sizeAsUnit(float f, int u) {
-    return std::ceil(f / (float) u);
-}
-
+//TODO: Factorize these getBlablaTexture methods
 Texture &SnakeAdapter::getHeadTexture(SnakePart *part) {
     return ctrl->resourceManager->getBundle("snake_tail_bundle").at(part->getDir().toIndex());
 }
-
 Texture &SnakeAdapter::getCurvedBodyTexture(SnakePart *part) {
     if (
         (part->getDir() == Direction::East && part->getPrev()->getDir() == Direction::South)
@@ -69,7 +34,6 @@ Texture &SnakeAdapter::getCurvedBodyTexture(SnakePart *part) {
         return ctrl->resourceManager->getBundle("snake_curved_body_bundle").at(3);
     }
 }
-
 Texture &SnakeAdapter::getBodyTexture(SnakePart *part) {
     return ctrl->resourceManager->getBundle("snake_body_bundle").at(part->getDir().toIndex());
 }
@@ -83,7 +47,7 @@ Texture &SnakeAdapter::findTexture(SnakePart *p, float i) {
         } else {
             return getCurvedBodyTexture(p);//with correct texture of curved body
         }
-    } else if (i == p->size() - 1 && p->getNext() == nullptr) {
+    } else if (p->size() - i < 1.0 && p->getNext() == nullptr) {
         return getTailTexture(p);//with correct texture of tail
     } else {
         return getBodyTexture(p);//with correct texture of body
@@ -113,13 +77,38 @@ std::vector<Drawable *> SnakeAdapter::adapt(Adaptable *a)
 {
     Snake *snake = (Snake *) a;
     std::vector<Drawable * > adaptedSnake;
+    int tmp = 0;
     for (SnakePart *part = snake->getHead(); part != nullptr; part = part->getNext()) {
+        int sum = 0;
+        bool ab = false;
         for (float i = 0.0; i < part->size(); i++) {
+            //TODO: Take into account that the last iteration of this loop needs special displacement
+            //when size is 2.4: 3 sprites are required but the last must be set to overlap
+            //the previous one when its length will make it pertrude from the snake
+            if (part->size() - i < 1.0) {
+                i -= (1 - (part->size() - i)) / 2.0;
+                ab = true;
+            }
             Vector2f displacement = posInPart(part->getDir(), i);
             Sprite *adaptedPart = new Sprite(findTexture(part, i));
+            if (i == 0) {
+                adaptedPart->setColor(Color::Red);
+            } else if (ab) {
+                adaptedPart->setColor(Color::Green);
+            }
             adaptedPart->setPosition(positionInWorld(part, displacement, ctrl->getWindowCenter()));
             adaptedSnake.push_back(adaptedPart);
+            if (part->size() - i < 1.0) {
+                tmp++;
+            }
+            sum++;
         }
+        Text *label = new Text(std::to_string(part->size()) + ": " + std::to_string(sum), ctrl->resourceManager->getFont("minecraft"), 32);
+        label->setScale(0.1, 0.1);
+        label->setFillColor(Color::Red);
+        label->setPosition(positionInWorld(part, Vector2f(), ctrl->getWindowCenter()));
+        adaptedSnake.push_back(label);
     }
+    printf("dernier morceau, %d\n", tmp);
     return adaptedSnake;
 }

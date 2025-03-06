@@ -45,7 +45,7 @@ void SplashState::handleInput() {
             } else if (Keyboard::isKeyPressed(Keyboard::D)) {
                 snake->setDirection(Direction::East);
             } else if (Keyboard::isKeyPressed(Keyboard::Space)) {
-				snake->grow(1.0);
+				moving = !moving;
             }
 			else if (Keyboard::isKeyPressed(Keyboard::Up)) {
 				View v = controller->window->getView();
@@ -84,7 +84,7 @@ void SplashState::handleInput() {
 }
 
 void SplashState::update() {
-	snake->update();
+	if (moving) {snake->update();}
     currentSpriteSnake = adpater->adapt(snake);
 }
 

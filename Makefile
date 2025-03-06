@@ -55,6 +55,8 @@ compile: main
 run:
 	export LD_LIBRARY_PATH=$(SFML)/lib && ./$(EXEC_NAME)
 
+re: compile run
+
 clean:
 	rm $(BUILD)/*.o
 

@@ -24,6 +24,7 @@ private:
     std::vector<sf::Drawable *> currentSpriteSnake;
     SnakeAdapter *adpater;
     Controller *controller;
+    bool moving = false;
 
     AnimatedSprite *an;
 };
