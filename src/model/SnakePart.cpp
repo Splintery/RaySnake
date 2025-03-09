@@ -66,7 +66,7 @@ SnakePart *SnakePart::getNext() {
 SnakePart *SnakePart::getPrev() {
     return prev;
 }
-Bound *SnakePart::getBounds() {
+Bound *SnakePart::getBound() {
     return bounds;
 }
 

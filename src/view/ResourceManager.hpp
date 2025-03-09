@@ -21,6 +21,7 @@ public:
     sf::Font &getFont(std::string key);
 
     void loadBundle(std::string key, std::vector<std::string> filePaths);
+    // linesize && columnsize must be expressed in pixels
     void loadBundle(std::string key, std::string filePath, int line, int column, int linesize, int colsize);
     void loadBundle(std::string key, std::vector<sf::Texture> textures);
     std::vector<sf::Texture> &getBundle(std::string key);

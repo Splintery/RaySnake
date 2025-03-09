@@ -4,6 +4,10 @@
 
 using namespace sf;
 
+Adaptable::Adaptable() {}
+
+Adaptable::~Adaptable() {}
+
 void Snake::trimTail() {
     if (tail->getPrev() != nullptr) {
         tail = tail->getPrev();
@@ -12,7 +16,7 @@ void Snake::trimTail() {
 }
 
 void Snake::glueHead() {
-    Bound *unit = new Bound(head->getBounds(), oldDir == Direction::North || oldDir == Direction::West);
+    Bound *unit = new Bound(head->getBound(), oldDir == Direction::North || oldDir == Direction::West);
     Bound *tmp = Direction::getBoundTowards(
         newDir,
         unit,
@@ -91,10 +95,29 @@ SnakePart *Snake::getTail() {
     return tail;
 }
 
+std::vector<Bound *> Snake::getBounds() {
+    std::vector<Bound *> res;
+    SnakePart *curr = head;
+    while (curr != nullptr) {
+        res.push_back(curr->getBound());
+        curr = curr->getNext();
+    }
+    return res;
+}
+std::vector<Direction> Snake::getDirections() {
+    std::vector<Direction> res;
+    SnakePart *curr = head;
+    while (curr != nullptr) {
+        res.push_back(curr->getDir());
+        curr = curr->getNext();
+    }
+    return res;
+}
+
 std::ostream &operator<<(std::ostream &out, const Snake &snake) {
     SnakePart *currentPart = snake.head;
     while (currentPart != nullptr) {
-        out << *(currentPart->getBounds()) << std::endl;
+        out << *(currentPart->getBound()) << std::endl;
         currentPart = currentPart->getNext();
     }
     return out;

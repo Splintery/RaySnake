@@ -21,9 +21,7 @@ SplashState::~SplashState() {
 
 void SplashState::init() {
 	snake = new Snake(Direction::East, sf::Vector2f(0, 0), 20);
-    adpater = new SnakeAdapter(controller);
-    currentSpriteSnake = adpater->adapt(snake);
-
+    drawableSnake = new SnakeAdapter(controller, snake);
     // an = new AnimatedSprite(controller->resourceManager->getTexture("testAni"), 7, 16, 7, 14);
 }
 void SplashState::handleInput() {
@@ -84,8 +82,7 @@ void SplashState::handleInput() {
 }
 
 void SplashState::update() {
-	if (moving) {snake->update();}
-    currentSpriteSnake = adpater->adapt(snake);
+	// if (moving) {snake->update();drawableSnake->update();}
 }
 
 void SplashState::draw() {
@@ -97,11 +94,12 @@ void SplashState::draw() {
 	s->setPosition(200, 200);
 	controller->draw(*s);
 
-	std::vector<Drawable *>::iterator it;
-	for (it = currentSpriteSnake.begin(); it != currentSpriteSnake.end(); ++it) {
-		Drawable *tmp = *it;
-		controller->window->draw(*tmp);
-	}
+	controller->draw(*drawableSnake);
+	// std::vector<Drawable *>::iterator it;
+	// for (it = currentSpriteSnake.begin(); it != currentSpriteSnake.end(); ++it) {
+	// 	Drawable *tmp = *it;
+	// 	controller->window->draw(*tmp);
+	// }
 
     controller->window->display();
 }

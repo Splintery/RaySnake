@@ -28,7 +28,7 @@ public:
     Direction getDir();
     SnakePart *getNext();
     SnakePart *getPrev();
-    Bound *getBounds();
+    Bound *getBound();
 
     friend std::ostream &operator<<(std::ostream &, const SnakePart &);
 };

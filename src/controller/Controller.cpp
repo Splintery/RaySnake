@@ -25,7 +25,7 @@ void Controller::loadAssets() {
     resourceManager->loadBundle("snake_body_bundle", "./resources/snake_body_sheet.png", 1, 4, 16, 16);
     resourceManager->loadBundle("snake_curved_body_bundle", "./resources/snake_curved_body_sheet.png", 1, 4, 16, 16);
     resourceManager->loadBundle("snake_tail_bundle", "./resources/snake_tail_sheet.png", 1, 4, 16, 16);
-    resourceManager->loadTexture("snake_animated_head", "./resources/testAnimation.png");
+    resourceManager->loadBundle("snake_animated_head", "./resources/animated_snake_head.png", 4, 1, 16, 112);
 }
 
 void Controller::draw(const sf::Drawable &drawable) {

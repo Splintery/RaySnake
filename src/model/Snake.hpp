@@ -28,6 +28,9 @@ public:
     SnakePart *getHead();
     SnakePart *getTail();
 
+    virtual std::vector<Bound *> getBounds();
+    virtual std::vector<Direction> getDirections();
+
     friend std::ostream &operator<<(std::ostream &, const Snake &);
 };
 

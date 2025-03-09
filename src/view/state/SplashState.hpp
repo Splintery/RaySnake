@@ -21,8 +21,7 @@ public:
     void setSnake(std::stack<SnakePart *> newSnake);
 private:
     Snake *snake;
-    std::vector<sf::Drawable *> currentSpriteSnake;
-    SnakeAdapter *adpater;
+    SnakeAdapter *drawableSnake;
     Controller *controller;
     bool moving = false;
 
