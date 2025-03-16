@@ -18,7 +18,6 @@ public:
     void handleInput();
     void update();
     void draw();
-    void setSnake(std::stack<SnakePart *> newSnake);
 private:
     Snake *snake;
     SnakeAdapter *drawableSnake;
