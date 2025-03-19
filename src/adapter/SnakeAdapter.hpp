@@ -7,19 +7,16 @@
 
 //TODO: Rethink class as to "re-use" the previous adapted snake to produce the new one,
 //make it work seemlessly with custom AnimatedSprite.hpp
-class SnakeAdapter: public Adapter {
+class SnakeAdapter: public Adapter , public Snake {
 private:
-    std::vector<sf::Drawable *> sprites;
-    std::vector<AnimatedSprite *> aniSprites;
-    sf::Texture &getCurvedBodyTexture(std::vector<Direction> &dirs, int i);
-    sf::Texture &findTexture(std::vector<Bound *> &bounds, std::vector<Direction> &dirs, int i, float j);
-    sf::Sprite *buildSprite(SnakePart *, float i);
+    std::vector<AnimatedSprite *> sprites;
 public:
-    SnakeAdapter(Controller *, Adaptable *);
-    
-    // std::vector<sf::Drawable *> adapt(Adaptable *);
-    virtual void update();
+    SnakeAdapter(Controller *, const Direction &, sf::Vector2f, float);
+    virtual void updateView();
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    void update() override;
+    void grow(float) override;
+    void move(float) override;
 };
 
 #endif

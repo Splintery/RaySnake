@@ -19,7 +19,6 @@ public:
     void update();
     void draw();
 private:
-    Snake *snake;
     SnakeAdapter *drawableSnake;
     Controller *controller;
     bool moving = false;

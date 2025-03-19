@@ -1,18 +1,17 @@
 #ifndef SNAKE_H
 #define SNAKE_H
 
-#include <stack>
 #include "SnakePart.hpp"
 #include "Direction.hpp"
-#include "../adapter/Adaptable.hpp"
 
-class Snake: public Adaptable {
-private:
+class Snake {
+protected:
     SnakePart *head;
     SnakePart *tail;
     Direction newDir;
     Direction oldDir;
     float length;
+    float speed = 0.1f;
 
     void trimTail();
     void glueHead();
@@ -20,16 +19,13 @@ public:
     Snake(const Direction &, sf::Vector2f, float);
     virtual ~Snake();
     Snake(const Snake &) = delete;
-    void update();
+    virtual void update();
     float size();
-    void grow(float);
-    void move(float);
+    virtual void grow(float);
+    virtual void move(float);
     void setDirection(const Direction &);
     SnakePart *getHead();
     SnakePart *getTail();
-
-    virtual std::vector<Bound *> getBounds();
-    virtual std::vector<Direction> getDirections();
 
     friend std::ostream &operator<<(std::ostream &, const Snake &);
 };

@@ -8,7 +8,7 @@
 
 class Controller {
     sf::Clock clock;
-    int UPS = 100;
+    int UPS = 200;
     int FPS = 144;
     const float timePerUpdate = 1000000.0f / static_cast<float>(UPS);
     const float timePerFrame = 1000000.0f / static_cast<float>(FPS);
@@ -25,6 +25,7 @@ public:
 
     long getCurrentTime();
     sf::Vector2f getWindowCenter();
+    sf::Vector2f convertPosition(sf::Vector2f);
     sf::Vector2f getMousePos();
     void draw(const sf::Drawable &drawable);
 

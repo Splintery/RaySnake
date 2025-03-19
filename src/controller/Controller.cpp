@@ -47,8 +47,10 @@ long Controller::getCurrentTime() {
 };
 
 sf::Vector2f Controller::getWindowCenter() {
-    sf::Vector2f center(window->getSize().x / 2, window->getSize().y / 2);
-    return center;
+    return sf::Vector2f(window->getSize().x / 2, window->getSize().y / 2);
+}
+sf::Vector2f Controller::convertPosition(sf::Vector2f modelPos) {
+    return sf::Vector2f(modelPos.x, -modelPos.y) + getWindowCenter();
 }
 sf::Vector2f Controller::getMousePos() {
     sf::Vector2i mousePos = sf::Mouse::getPosition(*window);

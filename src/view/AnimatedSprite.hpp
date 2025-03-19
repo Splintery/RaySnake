@@ -6,7 +6,7 @@
 
 class AnimatedSprite: public sf::Sprite {
 private:
-    std::vector<sf::Sprite *> sprites;
+    std::vector<sf::Texture> textures;
     int animationTick = 0;
     int incr = 1;
     sf::Texture &spriteSheet;
@@ -23,12 +23,10 @@ public:
     // every seconds.
     AnimatedSprite(sf::Texture &, unsigned int tileSize, int animation_fps, unsigned int startIndex = 0, bool loop = true, bool pingpongLoop = false);
     virtual ~AnimatedSprite();
-    sf::Sprite *getCurrentSprite();
-    sf::Sprite * debugMe(int n);
-    void setPosition(sf::Vector2f newPos);
-    void setPosition(float newX, float newY);
+    sf::Texture &getCurrentSprite();
+    sf::Texture & debugMe(int n);
     void update(); // Needs to be called every frame in order to set the correct texture
-    virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+    // virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };
 
 #endif

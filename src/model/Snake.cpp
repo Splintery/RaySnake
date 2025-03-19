@@ -4,10 +4,6 @@
 
 using namespace sf;
 
-Adaptable::Adaptable() {}
-
-Adaptable::~Adaptable() {}
-
 void Snake::trimTail() {
     if (tail->getPrev() != nullptr) {
         tail = tail->getPrev();
@@ -56,7 +52,7 @@ Snake::~Snake() {
 }
 
 void Snake::update() {
-    move(0.10f);
+    move(speed);
     length = head->size();
 }
 float Snake::size() {
@@ -80,7 +76,6 @@ void Snake::move(float amount) {
         trimTail();
     }
     oldDir = newDir;
-    // std::cout << "Size of snake: " << head->totalSize() << std::endl;
 }
 
 void Snake::setDirection(const Direction &newDir) {
@@ -93,25 +88,6 @@ SnakePart *Snake::getHead() {
 }
 SnakePart *Snake::getTail() {
     return tail;
-}
-
-std::vector<Bound *> Snake::getBounds() {
-    std::vector<Bound *> res;
-    SnakePart *curr = head;
-    while (curr != nullptr) {
-        res.push_back(curr->getBound());
-        curr = curr->getNext();
-    }
-    return res;
-}
-std::vector<Direction> Snake::getDirections() {
-    std::vector<Direction> res;
-    SnakePart *curr = head;
-    while (curr != nullptr) {
-        res.push_back(curr->getDir());
-        curr = curr->getNext();
-    }
-    return res;
 }
 
 std::ostream &operator<<(std::ostream &out, const Snake &snake) {
