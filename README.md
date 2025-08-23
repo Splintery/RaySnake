@@ -21,3 +21,9 @@ TODO: Rethink the class described in World.hpp, make it so it doesn't hold the s
 TODO: Sortir le Snake du World, faire une méthode update pour world et la faire gérer les collisions et tout avec le Snake.
 
 The controller should only hold what is needed for transitionning through states and updating/drawing them. It is the state itself that needs to hold the various objects required for it.
+
+TODO: Make player controls structure for easy passing of player control through states
+
+TODO: Animated Sprite that can queue specific animations of signal when an animation is done
+
+TODO: Enhance snake changing of direction, make it more predictable (overlay of next position ???)
