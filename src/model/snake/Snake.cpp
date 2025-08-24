@@ -1,6 +1,5 @@
 #include <iostream>
 #include "Snake.hpp"
-#include "Bound.hpp"
 
 using namespace sf;
 

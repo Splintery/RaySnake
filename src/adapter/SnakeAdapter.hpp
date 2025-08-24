@@ -3,7 +3,7 @@
 
 #include "Adapter.hpp"
 #include "../view/AnimatedSprite.hpp"
-#include "../model/Snake.hpp"
+#include "../model/snake/Snake.hpp"
 
 //TODO: Rethink class as to "re-use" the previous adapted snake to produce the new one,
 //make it work seemlessly with custom AnimatedSprite.hpp

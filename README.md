@@ -27,3 +27,6 @@ TODO: Make player controls structure for easy passing of player control through 
 TODO: Animated Sprite that can queue specific animations of signal when an animation is done
 
 TODO: Enhance snake changing of direction, make it more predictable (overlay of next position ???)
+
+cmake -B build
+cmake --build build

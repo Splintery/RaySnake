@@ -4,15 +4,12 @@
 #include "SplashState.hpp"
 #include "../../settings/Settings.hpp"
 #include "../../controller/Controller.hpp"
-#include "../../model/Snake.hpp"
+#include "../../model/snake/Snake.hpp"
+#include <optional>
 
-using namespace sf;
+// using namespace sf;
 
-State::~State() {
-    std::cout << "state destroyed." << std::endl;
-}
-
-SplashState::SplashState(Controller *controller): controller{controller} {
+SplashState::SplashState(Controller *controller): State{}, controller{controller} {
 	std::cout << "Created SplashState." << std::endl;
 }
 SplashState::~SplashState() {
@@ -25,58 +22,69 @@ void SplashState::init() {
     // an = new AnimatedSprite(controller->resourceManager->getTexture("testAni"), 7, 16, 7, 14);
 }
 void SplashState::handleInput() {
-	Event event;
+	while (controller->window->isOpen()) {
+		while (const std::optional event = controller->window->pollEvent()) {
+			if (event->is<sf::Event::Closed>()) {
+				controller->window->close();
+			} else if (const auto *keyPressed = event->getIf<sf::Event::KeyPressed>()) {
+				switch (keyPressed->scancode)
+				{
+				case sf::Keyboard::Scancode::Z:
+					snake->setDirection(Direction::North);
+					break;
+				case sf::Keyboard::Scancode::Q:
+					snake->setDirection(Direction::West);
+					break;
+				case sf::Keyboard::Scancode::S:
+					snake->setDirection(Direction::South);
+					break;
+				case sf::Keyboard::Scancode::D:
+					snake->setDirection(Direction::East);
+					break;
+				case sf::Keyboard::Scancode::Up: {
+					sf::View v = controller->window->getView();
+					v.move({0, 10});
+					controller->window->setView(v);
+					break;
+				}
+				case sf::Keyboard::Scancode::Down: {
+					sf::View v = controller->window->getView();
+					v.move({0, -10});
+					controller->window->setView(v);
+					break;
+				}
+				case sf::Keyboard::Scancode::Right: {
+					sf::View v = controller->window->getView();
+					v.move({10, 0});
+					controller->window->setView(v);
+					break;
+				}
+				case sf::Keyboard::Scancode::Left: {
+					sf::View v = controller->window->getView();
+					v.move({-10, 0});
+					controller->window->setView(v);
+					break;
+				}
+				case sf::Keyboard::Scancode::A: {
+					sf::View v = controller->window->getView();
+					v.zoom(0.75f);
+					controller->window->setView(v);
+					break;
+				}
+				case sf::Keyboard::Scancode::E: {
+					sf::View v = controller->window->getView();
+					v.zoom(1.25f);
+					controller->window->setView(v);
+					break;
+				}
+				default:
+					break;
+				}
+				if (keyPressed->scancode == sf::Keyboard::Scancode::Z)
+				{
 
-	while (controller->window->pollEvent(event)) {
-		switch (event.type)
-		{
-		case Event::Closed:
-			controller->window->close();
-			break;
-		case Event::KeyPressed:
-			if (Keyboard::isKeyPressed(Keyboard::Z)) {
-                snake->setDirection(Direction::North);
-            } else if (Keyboard::isKeyPressed(Keyboard::Q)) {
-                snake->setDirection(Direction::West);
-            } else if (Keyboard::isKeyPressed(Keyboard::S)) {
-                snake->setDirection(Direction::South);
-            } else if (Keyboard::isKeyPressed(Keyboard::D)) {
-                snake->setDirection(Direction::East);
-            } else if (Keyboard::isKeyPressed(Keyboard::Space)) {
-				moving = !moving;
-            }
-			else if (Keyboard::isKeyPressed(Keyboard::Up)) {
-				View v = controller->window->getView();
-				v.move(0, 10);
-				controller->window->setView(v);
+				}
 			}
-			else if (Keyboard::isKeyPressed(Keyboard::Down)) {
-				View v = controller->window->getView();
-				v.move(0, -10);
-				controller->window->setView(v);
-			}
-			else if (Keyboard::isKeyPressed(Keyboard::Right)) {
-				View v = controller->window->getView();
-				v.move(10, 0);
-				controller->window->setView(v);
-			}
-			else if (Keyboard::isKeyPressed(Keyboard::Left)) {
-				View v = controller->window->getView();
-				v.move(-10, 0);
-				controller->window->setView(v);
-			} else if (Keyboard::isKeyPressed(Keyboard::A)) {
-				View v = controller->window->getView();
-				v.zoom(0.75f);
-				controller->window->setView(v);
-			} else if (Keyboard::isKeyPressed(Keyboard::E)) {
-				View v = controller->window->getView();
-				v.zoom(1.25f);
-				controller->window->setView(v);
-			}
-			break;
-		
-		default:
-			break;
 		}
 	}
 }
@@ -86,12 +94,12 @@ void SplashState::update() {
 }
 
 void SplashState::draw() {
-	controller->window->clear(Color::White);
+	controller->window->clear(sf::Color::White);
 
     // an->update();
     // controller->draw(*an);
-	Sprite *s = new Sprite(controller->resourceManager->getBundle("snake_tail_bundle").at(0));
-	s->setPosition(200, 200);
+	sf::Sprite *s = new sf::Sprite(controller->resourceManager->getBundle("snake_tail_bundle").at(0));
+	s->setPosition({200, 200});
 	controller->draw(*s);
 
 	controller->draw(*drawableSnake);

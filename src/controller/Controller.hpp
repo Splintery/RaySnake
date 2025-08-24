@@ -19,7 +19,7 @@ public:
     sf::RenderWindow* window;
     Snake *snake;
 
-    Controller(int width, int height, const std::string &title);
+    Controller(unsigned int width, unsigned int height, const std::string &title);
 
     void loadAssets();
 

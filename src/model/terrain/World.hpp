@@ -4,7 +4,7 @@
 #include <set>
 #include <SFML/Graphics.hpp>
 #include "../Direction.hpp"
-#include "../Snake.hpp"
+#include "../snake/Snake.hpp"
 
 
 class World {

@@ -2,8 +2,8 @@
 #define SNAKEPART_H
 
 #include <SFML/Graphics.hpp>
-#include "Direction.hpp"
-#include "Bound.hpp"
+#include "../Direction.hpp"
+#include "../Bound.hpp"
 
 class SnakePart {
 private:

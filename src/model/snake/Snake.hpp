@@ -3,8 +3,9 @@
 
 #include <stack>
 #include "SnakePart.hpp"
-#include "Direction.hpp"
-#include "../adapter/Adaptable.hpp"
+#include "../Bound.hpp"
+#include "../Direction.hpp"
+#include "../../adapter/Adaptable.hpp"
 
 class Snake: public Adaptable {
 private:

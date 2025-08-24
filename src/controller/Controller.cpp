@@ -5,12 +5,12 @@
 #include "../model/terrain/World.hpp"
 #include "../settings/Settings.hpp"
 
-Controller::Controller(int width, int height, const std::string &title) {
+Controller::Controller(unsigned int width, unsigned int height, const std::string &title) {
     std::cout << "Creating controller..." << std::endl;
 
     resourceManager = new ResourceManager();
     stateMachine = new StateMachine();
-    window = new sf::RenderWindow(sf::VideoMode(width, height), title, sf::Style::Close);
+    window = new sf::RenderWindow(sf::VideoMode({width, height}), title, sf::Style::Close);
 
     clock = sf::Clock();
 

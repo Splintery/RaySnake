@@ -1,13 +1,17 @@
 #ifndef STATE_H
 #define STATE_H
 
-#include <SFML/Graphics.hpp>
+#include <ostream>
+#include <iostream>
 
 class State {
-protected:
-    sf::Sprite background;
 public:
-    virtual ~State();
+    State() {
+        std::cout << "state created." << std::endl;
+    }
+    virtual ~State() {
+        std::cout << "state destroyed." << std::endl;
+    }
 
     virtual void init() = 0;
     virtual void handleInput() = 0;
