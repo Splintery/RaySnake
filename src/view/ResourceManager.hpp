@@ -15,7 +15,7 @@ public:
     ResourceManager& operator=(const ResourceManager&) = delete;
 
     sf::Texture &getTexture(std::string key);
-    void loadTexture(std::string key, std::string filePath, sf::IntRect area = sf::IntRect());
+    void loadTexture(std::string key, std::string filePath, sf::Rect<int> area = sf::Rect<int>());
 
     void loadFont(std::string key, std::string filePath);
     sf::Font &getFont(std::string key);

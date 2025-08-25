@@ -5,10 +5,10 @@ ResourceManager::ResourceManager() {
     std::cout << "Constructed resource manager." << std::endl;
 }
 
-void ResourceManager::loadTexture(std::string key, std::string filePath, sf::IntRect area) {
+void ResourceManager::loadTexture(std::string key, std::string filePath, sf::Rect<int> area) {
     sf::Texture texture;
 
-    if (texture.loadFromFile(filePath, area)) {
+    if (texture.loadFromFile(filePath, false, area)) {
         this->textures[key] = texture;
     }
 }
@@ -20,7 +20,7 @@ sf::Texture &ResourceManager::getTexture(std::string key) {
 void ResourceManager::loadFont(std::string key, std::string filePath) {
     sf::Font font;
 
-    if (font.loadFromFile(filePath)) {
+    if (font.openFromFile(filePath)) {
         this->fonts[key] = font;
     }
 }
@@ -46,7 +46,7 @@ void ResourceManager::loadBundle(std::string key, std::string filePath, int line
 
     for (int l = 0; l < line; l++) {
         for (int c = 0; c < column; c++) {
-            textures.at(l * column + c).loadFromFile(filePath, sf::IntRect(c * colsize, l * linesize, colsize, linesize));
+            textures.at(l * column + c).loadFromFile(filePath, false, sf::Rect<int>({c * colsize, l * linesize}, {colsize, linesize}));
         }
     }
     this->bundles[key] = textures;
