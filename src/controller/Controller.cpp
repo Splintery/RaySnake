@@ -1,9 +1,9 @@
 #include <iostream>
-#include "Controller.hpp"
-#include "../view/state/SplashState.hpp"
-#include "../model/Direction.hpp"
-#include "../model/terrain/World.hpp"
-#include "../settings/Settings.hpp"
+#include "Controller.h"
+#include "../view/state/SplashState.h"
+#include "../model/Direction.h"
+#include "../model/terrain/World.h"
+#include "../settings/Settings.h"
 
 Controller::Controller(unsigned int width, unsigned int height, const std::string &title) {
     std::cout << "Creating controller..." << std::endl;
@@ -32,28 +32,16 @@ void Controller::draw(const sf::Drawable &drawable) {
     window->draw(drawable);
 }
 
-// sf::ConvexShape polygon;
-// polygon.setPointCount(5);
-// polygon.setPoint(0, sf::Vector2f(100, 100));
-// polygon.setPoint(1, sf::Vector2f(150, 360));
-// polygon.setPoint(2, sf::Vector2f(650, 400));
-// polygon.setPoint(3, sf::Vector2f(605, 370));
-// polygon.setPoint(4, sf::Vector2f(215, 150));
-// polygon.setOutlineColor(sf::Color::Red);
-// polygon.setOutlineThickness(1);
-
 long Controller::getCurrentTime() {
     return clock.getElapsedTime().asMicroseconds();
 };
 
-sf::Vector2f Controller::getWindowCenter() {
-    sf::Vector2f center(window->getSize().x / 2, window->getSize().y / 2);
+sf::Vector2<float> Controller::getWindowCenter() {
+    sf::Vector2<float> center(window->getSize().x / 2, window->getSize().y / 2);
     return center;
 }
-sf::Vector2f Controller::getMousePos() {
-    sf::Vector2i mousePos = sf::Mouse::getPosition(*window);
-    sf::Vector2f res(mousePos.x, mousePos.y);
-    return res;
+sf::Vector2<float> Controller::getMousePos() {
+    return sf::Vector2<float>(sf::Mouse::getPosition(*window));
 }
 
 void Controller::gameover() {

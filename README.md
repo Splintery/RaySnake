@@ -24,7 +24,7 @@ The controller should only hold what is needed for transitionning through states
 
 TODO: Make player controls structure for easy passing of player control through states
 
-TODO: Animated Sprite that can queue specific animations of signal when an animation is done
+TODO: Animated Sprite that can queue specific animations or signal when an animation is done
 
 TODO: Enhance snake changing of direction, make it more predictable (overlay of next position ???)
 

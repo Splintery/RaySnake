@@ -1,5 +1,5 @@
 #include <iostream>
-#include "StateMachine.hpp"
+#include "StateMachine.h"
 
 StateMachine::StateMachine() {
     std::cout << "Constructed state machine." << std::endl;

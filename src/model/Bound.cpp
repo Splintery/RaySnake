@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Bound.hpp"
+#include "Bound.h"
 
 using namespace sf;
 
@@ -11,8 +11,8 @@ float abs(float val) {
     }
 }
 
-Bound::Bound(Vector2f topL, Vector2f botR): topL{topL}, botR{botR} {}
-Bound::Bound(float x1, float y1, float x2, float y2): Bound(Vector2f(x1, y1), Vector2f(x2, y2)) {}
+Bound::Bound(Vector2<float> topL, Vector2<float> botR): topL{topL}, botR{botR} {}
+Bound::Bound(float x1, float y1, float x2, float y2): Bound(Vector2<float>(x1, y1), Vector2<float>(x2, y2)) {}
 Bound::Bound(): Bound(0.0, 0.0, 0.0, 0.0) {}
 Bound::~Bound() {
     // std::cout << "Deleting Bound" << std::endl;
@@ -22,8 +22,8 @@ Bound::Bound(const Bound &) {
 }
 Bound::Bound(Bound *b, bool fromTl) : 
 Bound(
-    fromTl ? b->topL : b->botR + Vector2f(-1, 1),
-    fromTl ? b->topL + Vector2f(1, -1) : b->botR
+    fromTl ? b->topL : b->botR + Vector2<float>(-1, 1),
+    fromTl ? b->topL + Vector2<float>(1, -1) : b->botR
 )
 {}
 
@@ -40,7 +40,7 @@ bool Bound::contains(float x, float y) {
     return x >= topL.x && x < botR.x && y <= topL.y && y > botR.y;
 }
 
-bool Bound::contains(Vector2f p) {
+bool Bound::contains(Vector2<float> p) {
     return contains(p.x, p.y);
 }
 

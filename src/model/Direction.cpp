@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Direction.hpp"
+#include "Direction.h"
 
 using namespace sf;
 
@@ -27,20 +27,17 @@ int Direction::toIndex() const {
         return -1;
     }
 }
-int Direction::indexTowards(Direction) const {
-    return 0;
-}
-Vector2f Direction::getVectorTowards(Direction d, sf::Vector2f p, float n)
+Vector2<float> Direction::getVectorTowards(Direction d, sf::Vector2<float> p, float n)
 {
     switch (d) {
     case North:
-        return p + Vector2f(0, n);
+        return p + Vector2<float>(0, n);
     case South:
-        return p + Vector2f(0, -n);
+        return p + Vector2<float>(0, -n);
     case East:
-        return p + Vector2f(n, 0);
+        return p + Vector2<float>(n, 0);
     case West:
-        return p + Vector2f(-n, 0);
+        return p + Vector2<float>(-n, 0);
     default:
         return p;
     };
@@ -75,10 +72,3 @@ std::ostream &operator<<(std::ostream &out, const Direction &d) {
     }
     return out;
 }
-// sf::Vector2f &operator*(const sf::Vector2f &l, const sf::Vector2f &r) {
-//     sf::Vector2f o(
-//         l.x * r.x,
-//         l.y * r.y
-//     );
-//     return o;
-// }

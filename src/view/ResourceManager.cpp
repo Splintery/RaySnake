@@ -1,5 +1,5 @@
 #include <iostream>
-#include "ResourceManager.hpp"
+#include "ResourceManager.h"
 
 ResourceManager::ResourceManager() {
     std::cout << "Constructed resource manager." << std::endl;

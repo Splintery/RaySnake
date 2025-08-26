@@ -1,5 +1,5 @@
 #include <iostream>
-#include "SnakePart.hpp"
+#include "SnakePart.h"
 
 
 SnakePart::SnakePart(SnakePart *prev, SnakePart *next, Direction dir, Bound *bounds): prev{prev}, next{next}, dir{dir}, bounds{bounds} {

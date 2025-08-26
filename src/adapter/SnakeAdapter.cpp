@@ -1,9 +1,9 @@
 #include <iostream>
 #include <cmath>
-#include "SnakeAdapter.hpp"
-#include "../settings/Settings.hpp"
-#include "../view/AnimatedSprite.hpp"
-#include "Adapter.hpp"
+#include "SnakeAdapter.h"
+#include "../settings/Settings.h"
+#include "../view/AnimatedSprite.h"
+#include "Adapter.h"
 
 using namespace sf;
 

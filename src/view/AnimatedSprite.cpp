@@ -1,4 +1,4 @@
-#include "AnimatedSprite.hpp"
+#include "AnimatedSprite.h"
 
 
 AnimatedSprite::AnimatedSprite(sf::Texture &spriteSheet, unsigned int tileSize, int animationSpeed, unsigned int startIndex, bool loop, bool pingpongLoop): sf::Sprite{spriteSheet}, spriteSheet{spriteSheet}, animationIndex{startIndex}, tileSize{tileSize}, nTextures{spriteSheet.getSize().x / tileSize}, animationSpeed{animationSpeed}, loop{loop}, pingpongLoop{pingpongLoop} {

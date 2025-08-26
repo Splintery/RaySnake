@@ -1,5 +1,5 @@
 #include <iostream>
-#include "Snake.hpp"
+#include "Snake.h"
 
 using namespace sf;
 
