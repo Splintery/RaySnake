@@ -30,3 +30,7 @@ TODO: Enhance snake changing of direction, make it more predictable (overlay of 
 
 cmake -B build
 cmake --build build
+
+TODO: Sh script for easier building of project and running
+
+TODO: Object tracker
