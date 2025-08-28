@@ -14,6 +14,7 @@ FetchContent_MakeAvailable(SFML)
 
 add_executable(
     main src/main.cpp
+    src/model/ObjectTracker.cpp
     src/adapter/SnakeAdapter.cpp
     src/controller/Controller.cpp
     src/inputs/PlayerInputs.cpp

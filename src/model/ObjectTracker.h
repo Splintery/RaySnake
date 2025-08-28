@@ -1,3 +1,6 @@
+#ifndef OBJECTTRACKER_H
+#define OBJECTTRACKER_H
+
 #include <map>
 #include <string>
 
@@ -10,3 +13,5 @@ public:
     
     friend std::ostream &operator<<(std::ostream &, const ObjectTracker &);
 };
+
+#endif

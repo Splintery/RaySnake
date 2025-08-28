@@ -2,11 +2,15 @@
 #include "SnakePart.h"
 
 
-SnakePart::SnakePart(SnakePart *prev, SnakePart *next, Direction dir, Bound *bounds): prev{prev}, next{next}, dir{dir}, bounds{bounds} {
+SnakePart::SnakePart(SnakePart *prev, SnakePart *next, Direction dir, Bound *bounds): prev{prev}, next{next}, dir{dir}, bounds{bounds}
+{
+    // tracker.addTo("SnakePart");
 }
 
-SnakePart::~SnakePart() {
+SnakePart::~SnakePart()
+{
     std::cout << "Destroying snakepart" << std::endl;
+    // tracker.removeFrom("SnakePart");
     delete(bounds);
 }
 

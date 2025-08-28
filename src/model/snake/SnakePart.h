@@ -4,6 +4,7 @@
 #include <SFML/Graphics.hpp>
 #include "../Direction.h"
 #include "../Bound.h"
+#include "../ObjectTracker.h"
 
 class SnakePart {
 private:
@@ -13,7 +14,7 @@ private:
     Direction dir;
 
     Bound *bounds;
-
+    ObjectTracker tracker;
 public:
     SnakePart(SnakePart *, SnakePart *, Direction dir, Bound *bounds);
     virtual ~SnakePart();
