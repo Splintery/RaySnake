@@ -5,13 +5,13 @@
 #include <string>
 
 class ObjectTracker {
-public:
+private:
     static std::map<std::string, int> tracker;
 
-    void addTo(std::string); // TODO call this method from every constructor
-    void removeFrom(std::string); // TODO call this method from every destructor
-    
-    friend std::ostream &operator<<(std::ostream &, const ObjectTracker &);
+public:
+    static void addTo(std::string); // TODO call this method from every constructor
+    static void removeFrom(std::string); // TODO call this method from every destructor
+    static void printStatus();
 };
 
 #endif

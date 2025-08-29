@@ -2,6 +2,8 @@
 #include <ostream>
 #include <iostream>
 
+std::map<std::string, int> ObjectTracker::tracker;
+
 void ObjectTracker::addTo(std::string key)
 {
     if (!tracker[key])
@@ -26,12 +28,11 @@ void ObjectTracker::removeFrom(std::string key)
     }
 }
 
-std::ostream &operator<<(std::ostream &out, const ObjectTracker &objt)
+void ObjectTracker::printStatus()
 {
-    for (std::map<std::string, int>::iterator itr = objt.tracker.begin(); itr != objt.tracker.end(); itr++)
+    for (std::map<std::string, int>::iterator itr = tracker.begin(); itr != tracker.end(); itr++)
     {
-        out << "[" << itr->first << "]: " << itr->second << std::endl; 
+        std::cout << "[" << itr->first << "]: " << itr->second << std::endl; 
     }
-    return out;
 }
 
