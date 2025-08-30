@@ -1,4 +1,5 @@
 #include "AnimatedSprite.h"
+#include "../model/ObjectTracker.h"
 
 
 AnimatedSprite::AnimatedSprite(sf::Texture &spriteSheet, unsigned int tileSize, int animationSpeed, unsigned int startIndex, bool loop, bool pingpongLoop): sf::Sprite{spriteSheet}, spriteSheet{spriteSheet}, animationIndex{startIndex}, tileSize{tileSize}, nTextures{spriteSheet.getSize().x / tileSize}, animationSpeed{animationSpeed}, loop{loop}, pingpongLoop{pingpongLoop} {
@@ -6,12 +7,14 @@ AnimatedSprite::AnimatedSprite(sf::Texture &spriteSheet, unsigned int tileSize, 
         sf::Sprite *s = new sf::Sprite(spriteSheet, sf::IntRect({i, 0}, {tileSize, tileSize}));
         sprites.push_back(s);
     }
+    ObjectTracker::addTo("AnimatedSprite");
 }
 
 AnimatedSprite::~AnimatedSprite() {
     while (!sprites.empty()) {
         sprites.pop_back();
     } 
+    ObjectTracker::removeFrom("AnimatedSprite");
 }
 
 sf::Sprite *AnimatedSprite::getCurrentSprite() {

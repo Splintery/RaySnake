@@ -5,15 +5,18 @@
 #include "../../settings/Settings.h"
 #include "../../controller/Controller.h"
 #include "../../model/snake/Snake.h"
+#include "../../model/ObjectTracker.h"
 #include <optional>
 
 // using namespace sf;
 
 SplashState::SplashState(Controller *controller): State{}, controller{controller} {
 	std::cout << "Created SplashState." << std::endl;
+	ObjectTracker::addTo("SplashState");
 }
 SplashState::~SplashState() {
   	std::cout << "splashstate destroyed." << std::endl;
+	ObjectTracker::removeFrom("SplashState");
 }
 
 void SplashState::init() {

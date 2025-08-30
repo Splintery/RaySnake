@@ -4,11 +4,19 @@
 #include "../settings/Settings.h"
 #include "../view/AnimatedSprite.h"
 #include "Adapter.h"
+#include "../model/ObjectTracker.h"
 
 using namespace sf;
 
-Adapter::~Adapter() { std::cout << "Destroyed adapter" << std::endl; }
-Adapter::Adapter(Controller *ctrl, Adaptable *a): ctrl{ctrl}, adaptable{a} {}
+Adapter::~Adapter()
+{ 
+    std::cout << "Destroyed adapter" << std::endl; 
+    ObjectTracker::removeFrom("Adapter");
+}
+Adapter::Adapter(Controller *ctrl, Adaptable *a): ctrl{ctrl}, adaptable{a} 
+{
+    ObjectTracker::addTo("Adapter");
+}
 
 Texture &SnakeAdapter::getCurvedBodyTexture(std::vector<Direction> &d, int i) {
     if (

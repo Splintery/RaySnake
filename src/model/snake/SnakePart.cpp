@@ -1,16 +1,16 @@
 #include <iostream>
 #include "SnakePart.h"
-
+#include "../ObjectTracker.h"
 
 SnakePart::SnakePart(SnakePart *prev, SnakePart *next, Direction dir, Bound *bounds): prev{prev}, next{next}, dir{dir}, bounds{bounds}
 {
-    // tracker.addTo("SnakePart");
+    ObjectTracker::addTo("SnakePart");
 }
 
 SnakePart::~SnakePart()
 {
     std::cout << "Destroying snakepart" << std::endl;
-    // tracker.removeFrom("SnakePart");
+    ObjectTracker::removeFrom("SnakePart");
     delete(bounds);
 }
 

@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Snake.h"
+#include "../ObjectTracker.h"
 
 using namespace sf;
 
@@ -42,6 +43,7 @@ Snake::Snake(const Direction &dir, Vector2f position, float length) : newDir{dir
         grow(length - head->size());
     }
     this->length = head->size();
+    ObjectTracker::addTo("Snake");
 }
 
 Snake::~Snake() {
@@ -52,6 +54,7 @@ Snake::~Snake() {
         p = p->getNext();
         delete tmp;
     }
+    ObjectTracker::removeFrom("Snake");
 }
 
 void Snake::update() {

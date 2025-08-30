@@ -1,8 +1,11 @@
 #include <iostream>
 #include "ResourceManager.h"
+#include "../model/ObjectTracker.h"
+
 
 ResourceManager::ResourceManager() {
     std::cout << "Constructed resource manager." << std::endl;
+    ObjectTracker::addTo("ResourceManager");
 }
 
 void ResourceManager::loadTexture(std::string key, std::string filePath, sf::Rect<int> area) {

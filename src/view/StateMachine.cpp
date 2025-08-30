@@ -1,8 +1,10 @@
 #include <iostream>
 #include "StateMachine.h"
+#include "../model/ObjectTracker.h"
 
 StateMachine::StateMachine() {
     std::cout << "Constructed state machine." << std::endl;
+    ObjectTracker::addTo("StateMachine");
 }
 
 StateMachine::~StateMachine() {
@@ -10,6 +12,7 @@ StateMachine::~StateMachine() {
         delete(states.top());
         states.pop();
     }
+    ObjectTracker::removeFrom("StateMachine");
 }
 
 void StateMachine::addState(State *newState, bool isReplacing) {
