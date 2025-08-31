@@ -5,6 +5,8 @@
 #include "../view/AnimatedSprite.h"
 #include "../model/snake/Snake.h"
 
+//TODO: Modify the use of resources by calling the "setRotation" on the sprite instead of having to draw textures for each rotations
+
 //TODO: Rethink class as to "re-use" the previous adapted snake to produce the new one,
 //make it work seemlessly with custom AnimatedSprite.hpp
 class SnakeAdapter: public Adapter {
