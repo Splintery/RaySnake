@@ -4,6 +4,12 @@ Snake but with Rays
 use javac launcher/Launcher.java to compile
 and java launcher.Launcher to run
 
+BUILD WITH:
+```
+cmake -B build
+cmake --build build
+```
+
 
 Idee:
 On contrôle un serpent dans un monde en 2D, le but est de s'échapper du terrarium.
@@ -27,9 +33,6 @@ TODO: Make player controls structure for easy passing of player control through 
 TODO: Animated Sprite that can queue specific animations or signal when an animation is done
 
 TODO: Enhance snake changing of direction, make it more predictable (overlay of next position ???)
-
-cmake -B build
-cmake --build build
 
 TODO: Sh script for easier building of project and running
 
