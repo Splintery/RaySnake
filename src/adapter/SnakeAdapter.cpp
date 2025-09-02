@@ -4,7 +4,7 @@
 #include "../settings/Settings.h"
 #include "../view/AnimatedSprite.h"
 #include "Adapter.h"
-#include "../model/ObjectTracker.h"
+#include "../model/tools/ObjectTracker.h"
 
 using namespace sf;
 

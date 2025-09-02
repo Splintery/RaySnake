@@ -14,19 +14,20 @@ FetchContent_MakeAvailable(SFML)
 
 add_executable(
     main src/main.cpp
-    src/model/ObjectTracker.cpp
     src/adapter/SnakeAdapter.cpp
     src/controller/Controller.cpp
     src/inputs/PlayerInputs.cpp
     src/model/snake/SnakePart.cpp
     src/model/snake/Snake.cpp
     src/model/terrain/World.cpp
-    src/model/Bound.cpp
-    src/model/Direction.cpp
+    src/model/tools/Bound.cpp
+    src/model/tools/Direction.cpp
+    src/model/tools/ObjectTracker.cpp
     src/view/state/SplashState.cpp
     src/view/AnimatedSprite.cpp
     src/view/ResourceManager.cpp
     src/view/StateMachine.cpp
+    src/view/State.hpp
 )
 target_compile_features(main PRIVATE cxx_std_17)
 target_link_libraries(main PRIVATE SFML::Graphics SFML::Audio)

@@ -1,8 +1,8 @@
 #ifndef ADAPTABLE_H
 #define ADAPTABLE_H
 
-#include "../model/Bound.h"
-#include "../model/Direction.h"
+#include "../model/tools/Bound.h"
+#include "../model/tools/Direction.h"
 
 class Adaptable {
 public:

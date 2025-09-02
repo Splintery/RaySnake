@@ -1,6 +1,6 @@
 #include <iostream>
 #include "SnakePart.h"
-#include "../ObjectTracker.h"
+#include "../tools/ObjectTracker.h"
 
 SnakePart::SnakePart(SnakePart *prev, SnakePart *next, Direction dir, Bound *bounds): prev{prev}, next{next}, dir{dir}, bounds{bounds}
 {

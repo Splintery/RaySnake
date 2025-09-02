@@ -5,7 +5,7 @@
 #include "../../settings/Settings.h"
 #include "../../controller/Controller.h"
 #include "../../model/snake/Snake.h"
-#include "../../model/ObjectTracker.h"
+#include "../../model/tools/ObjectTracker.h"
 #include <optional>
 
 // using namespace sf;

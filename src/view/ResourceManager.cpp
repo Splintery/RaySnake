@@ -1,6 +1,6 @@
 #include <iostream>
 #include "ResourceManager.h"
-#include "../model/ObjectTracker.h"
+#include "../model/tools/ObjectTracker.h"
 
 
 ResourceManager::ResourceManager() {

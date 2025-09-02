@@ -1,7 +1,7 @@
 #include <iostream>
 #include "Controller.h"
 #include "../view/state/SplashState.h"
-#include "../model/Direction.h"
+#include "../model/tools/Direction.h"
 #include "../model/terrain/World.h"
 #include "../settings/Settings.h"
 

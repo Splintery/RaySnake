@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Snake.h"
-#include "../ObjectTracker.h"
+#include "../tools/ObjectTracker.h"
 
 using namespace sf;
 
@@ -97,7 +97,17 @@ SnakePart *Snake::getTail() {
     return tail;
 }
 
-std::vector<Bound *> Snake::getBounds() {
+Bound Snake::predictHeadPlacement(Direction newDir)
+{
+    if (newDir == oldDir)
+    {
+        
+    }
+    return Bound();
+}
+
+std::vector<Bound *> Snake::getBounds()
+{
     std::vector<Bound *> res;
     SnakePart *curr = head;
     while (curr != nullptr) {

@@ -3,8 +3,8 @@
 
 #include <stack>
 #include "SnakePart.h"
-#include "../Bound.h"
-#include "../Direction.h"
+#include "../tools/Bound.h"
+#include "../tools/Direction.h"
 #include "../../adapter/Adaptable.h"
 
 class Snake: public Adaptable {
@@ -14,6 +14,9 @@ private:
     Direction newDir;
     Direction oldDir;
     float length;
+
+    float width = 1;
+    float speed = 1;
 
     void trimTail();
     void glueHead();
@@ -29,6 +32,7 @@ public:
     SnakePart *getHead();
     SnakePart *getTail();
 
+    Bound predictHeadPlacement(Direction);
     virtual std::vector<Bound *> getBounds();
     virtual std::vector<Direction> getDirections();
 

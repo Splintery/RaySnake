@@ -1,6 +1,6 @@
 #include <iostream>
 #include "StateMachine.h"
-#include "../model/ObjectTracker.h"
+#include "../model/tools/ObjectTracker.h"
 
 StateMachine::StateMachine() {
     std::cout << "Constructed state machine." << std::endl;

@@ -3,7 +3,7 @@
 
 #include <set>
 #include <SFML/Graphics.hpp>
-#include "../Direction.h"
+#include "../tools/Direction.h"
 #include "../snake/Snake.h"
 
 
