@@ -12,9 +12,9 @@ private:
     SnakePart *next;
     Direction dir;
 
-    Bound *bounds;
+    Bound bounds;
 public:
-    SnakePart(SnakePart *, SnakePart *, Direction dir, Bound *bounds);
+    SnakePart(SnakePart *, SnakePart *, Direction dir, Bound bounds);
     virtual ~SnakePart();
     SnakePart(const SnakePart &) = delete;
     float size();
@@ -27,7 +27,7 @@ public:
     Direction getDir();
     SnakePart *getNext();
     SnakePart *getPrev();
-    Bound *getBound();
+    Bound getBound();
 
     friend std::ostream &operator<<(std::ostream &, const SnakePart &);
 };

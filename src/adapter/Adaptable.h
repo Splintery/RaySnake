@@ -8,7 +8,7 @@ class Adaptable {
 public:
     Adaptable();
     virtual ~Adaptable() = 0;
-    virtual std::vector<Bound *> getBounds() = 0;
+    virtual std::vector<Bound> getBounds() = 0;
     virtual std::vector<Direction> getDirections() = 0;
 };
 

@@ -1,8 +1,9 @@
 #include <iostream>
 #include "SnakePart.h"
 #include "../tools/ObjectTracker.h"
+#include "../tools/BoundFactory.h"
 
-SnakePart::SnakePart(SnakePart *prev, SnakePart *next, Direction dir, Bound *bounds): prev{prev}, next{next}, dir{dir}, bounds{bounds}
+SnakePart::SnakePart(SnakePart *prev, SnakePart *next, Direction dir, Bound bounds): prev{prev}, next{next}, dir{dir}, bounds{bounds}
 {
     ObjectTracker::addTo("SnakePart");
 }
@@ -11,11 +12,10 @@ SnakePart::~SnakePart()
 {
     std::cout << "Destroying snakepart" << std::endl;
     ObjectTracker::removeFrom("SnakePart");
-    delete(bounds);
 }
 
 float SnakePart::size() {
-    return (dir == Direction::North || dir == Direction::South) ? bounds->height() : bounds->width();
+    return (dir == Direction::North || dir == Direction::South) ? bounds.height() : bounds.width();
 }
 
 float SnakePart::totalSize(float accumulator)
@@ -29,10 +29,10 @@ float SnakePart::totalSize(float accumulator)
     }
 }
 
-void SnakePart::grow(float amount, bool head) {
-    Bound *tmp = Direction::getStretchedBoundTowards(head ? dir : dir.invert(), bounds, amount);
-    delete(bounds);
-    bounds = tmp;
+void SnakePart::grow(float amount, bool head)
+{
+    BoundFactory factory = BoundFactory();
+    this->bounds = Bound(factory.stretchTowards(bounds, head ? dir : dir.invert(), amount));
 }
 
 void SnakePart::addNext(SnakePart *newPart) {
@@ -69,11 +69,11 @@ SnakePart *SnakePart::getNext() {
 SnakePart *SnakePart::getPrev() {
     return prev;
 }
-Bound *SnakePart::getBound() {
+Bound SnakePart::getBound() {
     return bounds;
 }
 
 std::ostream &operator<<(std::ostream &out, const SnakePart &part) {
-    out << "part{" << *part.bounds << "}";
+    out << "part{" << part.bounds << "}";
     return out;
 }

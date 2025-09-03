@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Snake.h"
 #include "../tools/ObjectTracker.h"
+#include "../tools/BoundFactory.h"
 
 using namespace sf;
 
@@ -16,33 +17,22 @@ void Snake::trimTail() {
 }
 
 void Snake::glueHead() {
-    Bound *unit = new Bound(head->getBound(), oldDir == Direction::North || oldDir == Direction::West);
-    Bound *tmp = Direction::getBoundTowards(
-        newDir,
-        unit,
-        1.0f
-    );
+    // BoundFactory fact = BoundFactory();
+    // if (oldDir == Direction::North || oldDir == Direction::West) Bound b = fact.unitFromTopLeft(head->getBound(), width);
+    // else Bound b = fact.unitFromBottomRight(head->getBound(), width);
+    // Bound c = fact.getBoundTowards(b, newDir, width);
     
-    SnakePart *newHead = new SnakePart(nullptr, head, newDir, tmp);
-    head->addPrev(newHead);
-    head = newHead;
-    tail->grow(-1.0, false);
+    // SnakePart *newHead = new SnakePart(nullptr, head, newDir, b);
+    // head->addPrev(newHead);
+    // head = newHead;
+    // tail->grow(-1.0, false);
 }
 
-Snake::Snake(const Direction &dir, Vector2f position, float length) : newDir{dir}, oldDir{dir} {
-    std::cout << "Creating snake" << std::endl;
-    Bound *b;
-    if (dir == Direction::North || dir == Direction::South) {
-        b = new Bound(position, position + Vector2f(1, -2));
-    } else {
-        b = new Bound(position, position + Vector2f(2, -1));
-    }
-    head = new SnakePart(nullptr, nullptr, dir, b);
+Snake::Snake(const Direction &dir, Vector2f position, float length) : newDir{dir}, oldDir{dir}, length{length} {
+    Bound b = Bound(position, position + Vector2<float>(width, -width));
+    head = new SnakePart(nullptr, nullptr, dir, b); //? When created the head is of size 0
     tail = head;
-    if (head->size() < length) {
-        grow(length - head->size());
-    }
-    this->length = head->size();
+    grow(length); //? it then grows to the desired size
     ObjectTracker::addTo("Snake");
 }
 
@@ -58,7 +48,7 @@ Snake::~Snake() {
 }
 
 void Snake::update() {
-    move(0.10f);
+    move(speed);
     length = head->size();
 }
 float Snake::size() {
@@ -69,17 +59,16 @@ void Snake::grow(float amount) {
 }
 
 void Snake::move(float amount) {    
-    if (newDir != oldDir) {
-        glueHead();
-    }
-
     head->grow(amount, true);
-    
     tail->grow(-amount, false);
 
-    if (tail->size() <= 1.0) {
+    if (tail->size() <= width) {
         head->grow(tail->size(), true);
         trimTail();
+    }
+
+    if (newDir != oldDir) {
+        glueHead();
     }
     oldDir = newDir;
     // std::cout << "Size of snake: " << head->totalSize() << std::endl;
@@ -106,9 +95,9 @@ Bound Snake::predictHeadPlacement(Direction newDir)
     return Bound();
 }
 
-std::vector<Bound *> Snake::getBounds()
+std::vector<Bound> Snake::getBounds()
 {
-    std::vector<Bound *> res;
+    std::vector<Bound> res;
     SnakePart *curr = head;
     while (curr != nullptr) {
         res.push_back(curr->getBound());
@@ -129,7 +118,7 @@ std::vector<Direction> Snake::getDirections() {
 std::ostream &operator<<(std::ostream &out, const Snake &snake) {
     SnakePart *currentPart = snake.head;
     while (currentPart != nullptr) {
-        out << *(currentPart->getBound()) << std::endl;
+        out << currentPart->getBound() << std::endl;
         currentPart = currentPart->getNext();
     }
     return out;

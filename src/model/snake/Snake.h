@@ -33,7 +33,7 @@ public:
     SnakePart *getTail();
 
     Bound predictHeadPlacement(Direction);
-    virtual std::vector<Bound *> getBounds();
+    virtual std::vector<Bound> getBounds();
     virtual std::vector<Direction> getDirections();
 
     friend std::ostream &operator<<(std::ostream &, const Snake &);

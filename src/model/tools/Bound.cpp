@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Bound.h"
+#include "ObjectTracker.h"
 
 using namespace sf;
 
@@ -17,15 +18,9 @@ Bound::Bound(): Bound(0.0, 0.0, 0.0, 0.0) {}
 Bound::~Bound() {
     // std::cout << "Deleting Bound" << std::endl;
 }
-Bound::Bound(const Bound &) {
-    std::cout << "Copyng Bound" << std::endl;
+Bound::Bound(const Bound &copyOf): topL{copyOf.topL}, botR{copyOf.botR} {
+    ObjectTracker::addTo("Bound");
 }
-Bound::Bound(Bound *b, bool fromTl) : 
-Bound(
-    fromTl ? b->topL : b->botR + Vector2<float>(-1, 1),
-    fromTl ? b->topL + Vector2<float>(1, -1) : b->botR
-)
-{}
 
 float Bound::width() const
 {

@@ -22,6 +22,7 @@ add_executable(
     src/model/terrain/World.cpp
     src/model/tools/Bound.cpp
     src/model/tools/Direction.cpp
+    src/model/tools/BoundFactory.cpp
     src/model/tools/ObjectTracker.cpp
     src/view/state/SplashState.cpp
     src/view/AnimatedSprite.cpp

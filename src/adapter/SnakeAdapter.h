@@ -14,7 +14,7 @@ private:
     std::vector<sf::Drawable *> sprites;
     std::vector<AnimatedSprite *> aniSprites;
     sf::Texture &getCurvedBodyTexture(std::vector<Direction> &dirs, int i);
-    sf::Texture &findTexture(std::vector<Bound *> &bounds, std::vector<Direction> &dirs, int i, float j);
+    sf::Texture &findTexture(std::vector<Bound> &bounds, std::vector<Direction> &dirs, int i, float j);
     sf::Sprite *buildSprite(SnakePart *, float i);
 public:
     SnakeAdapter(Controller *, Adaptable *);

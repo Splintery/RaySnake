@@ -39,11 +39,11 @@ Texture &SnakeAdapter::getCurvedBodyTexture(std::vector<Direction> &d, int i) {
     }
 }
 
-float size(Bound *b, Direction d) {
-    return (d == Direction::North || d == Direction::South) ? b->height() : b->width();
+float size(Bound b, Direction d) {
+    return (d == Direction::North || d == Direction::South) ? b.height() : b.width();
 }
 
-Texture &SnakeAdapter::findTexture(std::vector<Bound *> &b, std::vector<Direction> &d, int i, float j) {
+Texture &SnakeAdapter::findTexture(std::vector<Bound> &b, std::vector<Direction> &d, int i, float j) {
     if (j == 0) {
         if (i == 0) {
             //with correct texture of head
@@ -76,8 +76,8 @@ Vector2f posInPart(Direction d, float i) {
         return Vector2f();
     }
 }
-Vector2f getStartPoint(Bound *b, Direction d) {
-    return d == Direction::North || d == Direction::West ? b->topL : b->botR;
+Vector2f getStartPoint(Bound b, Direction d) {
+    return d == Direction::North || d == Direction::West ? b.topL : b.botR;
 }
 Vector2f mult(Vector2f v, Vector2f f) {
     return Vector2f(v.x * f.x, v.y * f.y);
@@ -87,7 +87,7 @@ Vector2f positionInWorld(Vector2f startPoint, Vector2f displacement, Vector2f wi
 }
 
 SnakeAdapter::SnakeAdapter(Controller *ctrl, Adaptable *a) : Adapter(ctrl, a) {
-    std::vector<Bound *> bounds = a->getBounds();
+    std::vector<Bound> bounds = a->getBounds();
     std::vector<Direction> dirs = a->getDirections();
     for (int i = 0; i < bounds.size(); i++) {
         for (float j = 0.0; j < size(bounds.at(i), dirs.at(i)); j++) {

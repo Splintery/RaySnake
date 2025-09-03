@@ -22,6 +22,7 @@ public:
     bool contains(sf::Vector2<float>);
     bool contains(float, float);
 
+    // Bound &operator=(const Bound&) = default;
     friend std::ostream &operator<<(std::ostream &, const Bound &);
 };
 
