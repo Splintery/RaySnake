@@ -2,11 +2,12 @@
 #define BOUND_H
 
 #include <SFML/System/Vector2.hpp>
+#include <ostream>
 
 class Bound {
 public:
-    const sf::Vector2<float> topL;
-    const sf::Vector2<float> botR;
+    sf::Vector2<float> topL;
+    sf::Vector2<float> botR;
     Bound(sf::Vector2<float>, sf::Vector2<float>);
     Bound(float, float, float, float);
     Bound();

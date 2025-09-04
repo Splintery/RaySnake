@@ -32,7 +32,7 @@ float SnakePart::totalSize(float accumulator)
 void SnakePart::grow(float amount, bool head)
 {
     BoundFactory factory = BoundFactory();
-    this->bounds = Bound(factory.stretchTowards(bounds, head ? dir : dir.invert(), amount));
+    this->bounds = factory.stretchTowards(bounds, head ? dir : dir.invert(), amount);
 }
 
 void SnakePart::addNext(SnakePart *newPart) {
