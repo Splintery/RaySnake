@@ -15,7 +15,8 @@ void Snake::trimTail() {
         tail->removeNext();
     }
 }
-
+//TODO: the area of the bound created for the new head should be 0, having it be 1 makes it to "snappy", 0 would improve control
+//? when it will be rendered, the head will stick out in front of the hit box a bit, giving player more time to react
 void Snake::glueHead() {
     // BoundFactory fact = BoundFactory();
     // if (oldDir == Direction::North || oldDir == Direction::West) Bound b = fact.unitFromTopLeft(head->getBound(), width);
