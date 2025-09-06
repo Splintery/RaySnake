@@ -37,3 +37,5 @@ TODO: Enhance snake changing of direction, make it more predictable (overlay of 
 TODO: Sh script for easier building of project and running
 
 TODO: Object tracker
+
+TODO: change of the Adapter works, to have an object from the model in the view I will create a child class of that object and make that child extend the sf::Drawable class. Each state can then store an amount of drawables that get called when drawing to the screen.
