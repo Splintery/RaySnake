@@ -38,4 +38,6 @@ TODO: Sh script for easier building of project and running
 
 TODO: Object tracker
 
-TODO: change of the Adapter works, to have an object from the model in the view I will create a child class of that object and make that child extend the sf::Drawable class. Each state can then store an amount of drawables that get called when drawing to the screen.
+TODO: change of how the Adapter works, to have an object from the model in the view I will create a child class of that object and make that child extend the sf::Drawable class. Each state can then store an amount of drawables that get called when drawing to the screen.
+
+TODO: implement a logger with macros. the logger should take in a config file where information regarding where the info should be logged out to. Different levels of logs should be configurable
