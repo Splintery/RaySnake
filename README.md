@@ -43,3 +43,12 @@ TODO: change of how the Adapter works, to have an object from the model in the v
 TODO: implement a logger with macros. the logger should take in a config file where information regarding where the info should be logged out to. Different levels of logs should be configurable
 
 TODO: to allow animated sprites to signal when an animation is done playing, the method update should take in a function pointer to call when the animation is done. the function passed in parameters would flip a Boolean that will cause updates in the model when the game loop calls it.
+
+planning for week of 15/09/2025:
+* Monday: sh script
+* Tuesday: snake overlay
+* wednesday: snake overlay
+* Thursday: snake overlay
+* Friday: adapter
+* Saturday: adapter
+* Sunday: adapter
