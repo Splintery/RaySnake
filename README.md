@@ -10,7 +10,7 @@ cmake -B build
 cmake --build build
 ```
 
-
+t
 Idee:
 On contrôle un serpent dans un monde en 2D, le but est de s'échapper du terrarium.
 Lorsque l'humain n'est pas dans la pièce la lumière s'étteint et on ne peut que voir se qui se trouve directement devant nous, et quand l'humain revient la lumière est rallumé et l'on peut voir se qui se trouve en dehors du champs de vision.
