@@ -10,7 +10,6 @@ cmake -B build
 cmake --build build
 ```
 
-t
 Idee:
 On contrôle un serpent dans un monde en 2D, le but est de s'échapper du terrarium.
 Lorsque l'humain n'est pas dans la pièce la lumière s'étteint et on ne peut que voir se qui se trouve directement devant nous, et quand l'humain revient la lumière est rallumé et l'on peut voir se qui se trouve en dehors du champs de vision.
@@ -46,9 +45,9 @@ TODO: to allow animated sprites to signal when an animation is done playing, the
 
 planning for week of 15/09/2025:
 * Monday: sh script
-* Tuesday: snake overlay
-* wednesday: snake overlay
-* Thursday: snake overlay
-* Friday: adapter
-* Saturday: adapter
-* Sunday: adapter
+* Tuesday: snake overlay prep work
+* wednesday: snake overlay implement
+* Thursday: snake overlay test
+* Friday: adapter prep work
+* Saturday: adapter implement 
+* Sunday: adapter test
