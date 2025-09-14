@@ -51,3 +51,12 @@ planning for week of 15/09/2025:
 * Friday: adapter prep work
 * Saturday: adapter implement 
 * Sunday: adapter test
+
+planning for week of 22/09/2025
+* Monday: Logger
+* Tuesday: Logger
+* Wednesday: Logger
+* Thursday: Player controls structure 
+* Friday: Player controls structure
+* Saturday: Player controls structure
+* Sunday: Player controls structure
