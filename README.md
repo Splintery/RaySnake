@@ -4,12 +4,6 @@ Snake but with Rays
 use javac launcher/Launcher.java to compile
 and java launcher.Launcher to run
 
-BUILD WITH:
-```
-cmake -B build
-cmake --build build
-```
-
 Idee:
 On contrôle un serpent dans un monde en 2D, le but est de s'échapper du terrarium.
 Lorsque l'humain n'est pas dans la pièce la lumière s'étteint et on ne peut que voir se qui se trouve directement devant nous, et quand l'humain revient la lumière est rallumé et l'on peut voir se qui se trouve en dehors du champs de vision.
@@ -44,18 +38,18 @@ TODO: implement a logger with macros. the logger should take in a config file wh
 TODO: to allow animated sprites to signal when an animation is done playing, the method update should take in a function pointer to call when the animation is done. the function passed in parameters would flip a Boolean that will cause updates in the model when the game loop calls it.
 
 planning for week of 15/09/2025:
-* Monday: sh script
-* Tuesday: snake overlay prep work
-* wednesday: snake overlay implement
-* Thursday: snake overlay test
+* Monday: sh script done
+* Tuesday:  Logger
+* wednesday:  Logger 
+* Thursday:  Logger 
 * Friday: adapter prep work
 * Saturday: adapter implement 
 * Sunday: adapter test
 
 planning for week of 22/09/2025
-* Monday: Logger
-* Tuesday: Logger
-* Wednesday: Logger
+* Monday: snake overlay prep
+* Tuesday: snake overlay implement
+* Wednesday: snake overlay test
 * Thursday: Player controls structure 
 * Friday: Player controls structure
 * Saturday: Player controls structure
