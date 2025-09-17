@@ -40,7 +40,7 @@ TODO: to allow animated sprites to signal when an animation is done playing, the
 planning for week of 15/09/2025:
 * Monday: sh script done
 * Tuesday:  Logger
-* wednesday:  Logger 
+* wednesday:  Logger Delay due to end of internship, move everything by one day
 * Thursday:  Logger 
 * Friday: adapter prep work
 * Saturday: adapter implement 
