@@ -49,5 +49,6 @@
         "ostream": "cpp",
         "stdexcept": "cpp",
         "streambuf": "cpp"
-    }
+    },
+    "cmake.sourceDirectory": "/home/spliny/Projects/RaySnake/code"
 }
