@@ -61,10 +61,12 @@ private:
     static std::unordered_map<std::string, LOG_LEVEL> log_level;
     static std::unordered_map<std::string, std::string> logger_appender_link;
     static std::unordered_map<std::string, AppenderInfo> message_colors;
+    
     static void addAppender(std::string, std::string);
     static void addLogger(std::string, std::string);
     static void readConfigFile(std::string);
     static std::string getDateAndTime();
+public:
     static void log_info(std::string, std::string);
     static void log_debug(std::string, std::string);
     static void log_trace(std::string, std::string);
@@ -72,4 +74,4 @@ private:
     static void log_error(std::string, std::string);
 };
 
-#endif;
+#endif

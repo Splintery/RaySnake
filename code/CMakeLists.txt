@@ -19,6 +19,7 @@ include_directories(
     inc/adapter
     inc/controller
     inc/inputs
+    inc/logger
     inc/model/snake
     inc/model/terrain
     inc/model/tools
@@ -32,6 +33,7 @@ add_executable(
     src/adapter/SnakeAdapter.cpp
     src/controller/Controller.cpp
     src/inputs/PlayerInputs.cpp
+    src/logger/Logger.cpp
     src/model/snake/SnakePart.cpp
     src/model/snake/Snake.cpp
     src/model/terrain/World.cpp
@@ -48,6 +50,7 @@ add_executable(
     inc/adapter/SnakeAdapter.h
     inc/controller/Controller.h
     inc/inputs/PlayerInputs.h
+    inc/logger/Logger.h
     inc/model/snake/Snake.h
     inc/model/snake/SnakePart.h
     inc/model/terrain/World.h

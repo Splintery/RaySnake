@@ -4,13 +4,12 @@
 #include "settings/Settings.h"
 #include "controller/Controller.h"
 #include "model/tools/Direction.h"
-
-#define TEST(x, y) std::cout << x << y << std::endl;
+#include "logger/Logger.h"
 
 int main() {
-
-    TEST("yoooooooooo", "ye");
-    
+    Logger::setLogConfigFile("loggerConfig.config");
+    LOG_TRACE("TestLog", "testmsg!");
+    LOG_TRACE("AnotherTest", "HELLLOOOOOOW");
     // Controller ctrl(20 * TILE_SIZE, 14 * TILE_SIZE, "RaySnake");
     return 0;
 }
