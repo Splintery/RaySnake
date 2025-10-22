@@ -48,8 +48,10 @@ void Logger::addLogger(std::string logger_name, std::string log_level)
 void Logger::readConfigFile(std::string filePath)
 {
     std::ifstream config_file = std::ifstream(filePath);
+    std::cout << "TETTSTSTTST" << std::endl;
     for (std::string line; std::getline(config_file, line);)
     {
+        std::cout << line << std::endl;
         if (line.size() > 6 && line.substr(0, 6) == "LOGGER") //? Line that defines the visibility of a logger
         {
             std::string logger = line.substr(7);
@@ -107,21 +109,32 @@ std::string Logger::getDateAndTime()
     std::time_t formated_time = std::chrono::system_clock::to_time_t(time);
     std::string time_to_print = std::ctime(&formated_time);
     time_to_print.pop_back();
-    return time_to_print;
+    return "[" + time_to_print + "]";
 }
 
-void Logger::log_info(std::string appender, std::string message)
+void Logger::log_colored(std::string color, std::string date, std::string logger, std::string msg)
 {
-    std::cout << "tttttttttt" << Logger::log_level[appender] << std::endl;
-    if (Logger::log_level[appender] && Logger::log_level[appender] >= LOG_LEVEL::INFO)
+    std::cout << date << color << logger << ": " << msg << "\033[0m" << std::endl;
+}
+
+void Logger::log_to_file(int fd, std::string date, std::string logger, std::string msg)
+{
+}
+
+void Logger::log_info(std::string logger, std::string msg)
+{
+    std::cout << (Logger::log_level[logger] >= LOG_LEVEL::INFO) << "tttttttttt" << Logger::log_level[logger] << std::endl;
+    if (Logger::log_level.count(logger) && (Logger::log_level[logger] >= LOG_LEVEL::INFO))
     {
-        std::cout << getDateAndTime() << ": " << appender << "-" << message << std::endl;
+        std::string color_settings = "\033[" + Logger::message_colors[Logger::logger_appender_link[logger]].info_color + "m";
+        Logger::log_colored(color_settings, getDateAndTime(), logger, msg);
     }
 }
 
 void Logger::log_debug(std::string appender, std::string message)
 {
-    if (Logger::log_level[appender] && Logger::log_level[appender] >= LOG_LEVEL::DEBUG)
+    std::cout << Logger::log_level[appender] << std::endl;
+    if (Logger::log_level.count(appender) && Logger::log_level[appender] >= LOG_LEVEL::DEBUG)
     {
         std::cout << getDateAndTime() << ": " << appender << "-" << message << std::endl;
     }
@@ -129,7 +142,7 @@ void Logger::log_debug(std::string appender, std::string message)
 
 void Logger::log_trace(std::string appender, std::string message)
 {
-    if (Logger::log_level[appender] && Logger::log_level[appender] >= LOG_LEVEL::TRACE)
+    if (Logger::log_level.count(appender) && Logger::log_level[appender] >= LOG_LEVEL::TRACE)
     {
         std::cout << getDateAndTime() << ": " << appender << "-" << message << std::endl;
     }
@@ -137,7 +150,7 @@ void Logger::log_trace(std::string appender, std::string message)
 
 void Logger::log_warn(std::string appender, std::string message)
 {
-    if (Logger::log_level[appender] && Logger::log_level[appender] >= LOG_LEVEL::WARN)
+    if (Logger::log_level.count(appender))
     {
         std::cout << getDateAndTime() << ": " << appender << "-" << message << std::endl;
     }
@@ -145,7 +158,7 @@ void Logger::log_warn(std::string appender, std::string message)
 
 void Logger::log_error(std::string appender, std::string message)
 {
-    if (Logger::log_level[appender] && Logger::log_level[appender] >= LOG_LEVEL::ERROR)
+    if (Logger::log_level.count(appender))
     {
         std::cout << getDateAndTime() << ": " << appender << "-" << message << std::endl;
     }

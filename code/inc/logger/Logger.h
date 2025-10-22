@@ -67,6 +67,18 @@ private:
     static void readConfigFile(std::string);
     static std::string getDateAndTime();
 public:
+    static void log_colored(
+        std::string color, 
+        std::string date, 
+        std::string logger, 
+        std::string msg
+    );
+    static void log_to_file(
+        int fd, 
+        std::string date, 
+        std::string logger, 
+        std::string msg
+    );
     static void log_info(std::string, std::string);
     static void log_debug(std::string, std::string);
     static void log_trace(std::string, std::string);

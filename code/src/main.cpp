@@ -8,8 +8,8 @@
 
 int main() {
     Logger::setLogConfigFile("loggerConfig.config");
-    LOG_TRACE("TestLog", "testmsg!");
-    LOG_TRACE("AnotherTest", "HELLLOOOOOOW");
+    LOG_INFO("TestLog", "testmsg!");
+    LOG_DEBUG("AnotherTest", "HELLLOOOOOOW");
     // Controller ctrl(20 * TILE_SIZE, 14 * TILE_SIZE, "RaySnake");
     return 0;
 }
