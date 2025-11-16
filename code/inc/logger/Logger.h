@@ -26,20 +26,16 @@ bold/bright off  21
 underline off    24
 inverse off      27
 */
-#define LOG_INFO(name, msg) Logger::log_info(name, msg)
-#define LOG_DEBUG(name, msg) Logger::log_debug(name, msg)
-#define LOG_TRACE(name, msg) Logger::log_trace(name, msg)
-#define LOG_WARN(name, msg) Logger::log_warn(name, msg)
-#define LOG_ERROR(name, msg) Logger::log_error(name, msg)
+#define LOG_INFO(name, msg) Logger::log_if_level(Logger::LOG_LEVEL::INFO, name, msg)
+#define LOG_DEBUG(name, msg) Logger::log_if_level(Logger::LOG_LEVEL::DEBUG, name, msg)
+#define LOG_TRACE(name, msg) Logger::log_if_level(Logger::LOG_LEVEL::TRACE, name, msg)
+#define LOG_WARN(name, msg) Logger::log_if_exist(name, msg)
+#define LOG_ERROR(name, msg) Logger::log_if_exist(name, msg)
 
-struct AppenderInfo
+struct Appender
 {
     int fileDescriptor;
-    std::string info_color;     //* Used with a console appender to help read logs
-    std::string debug_color;    //* Used with a console appender to help read logs
-    std::string trace_color;    //* Used with a console appender to help read logs
-    std::string warn_color;     //* Used with a console appender to help read logs
-    std::string error_color;    //* Used with a console appender to help read logs
+    std::string appender_color[5]; //* 0 is INFO, 1 is DEBUG, 2 is TRACE, 3 is WARN anc 4 is ERROR
     bool flush;
 };
 
@@ -60,11 +56,13 @@ public:
 private:
     static std::unordered_map<std::string, LOG_LEVEL> log_level;
     static std::unordered_map<std::string, std::string> logger_appender_link;
-    static std::unordered_map<std::string, AppenderInfo> message_colors;
+    static std::unordered_map<std::string, Appender> message_colors;
     
     static void addAppender(std::string, std::string);
     static void addLogger(std::string, std::string);
     static void readConfigFile(std::string);
+    static void readAppenderSettings(std::string);
+    static void readLoggerSettings(std::string);
     static std::string getDateAndTime();
 public:
     static void log_colored(
@@ -79,11 +77,8 @@ public:
         std::string logger, 
         std::string msg
     );
-    static void log_info(std::string, std::string);
-    static void log_debug(std::string, std::string);
-    static void log_trace(std::string, std::string);
-    static void log_warn(std::string, std::string);
-    static void log_error(std::string, std::string);
+    static void log_if_level(LOG_LEVEL, std::string, std::string);
+    static void log_if_exist(std::string, std::string);
 };
 
 #endif
